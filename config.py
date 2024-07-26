@@ -1,6 +1,24 @@
 from libqtile import bar, layout, qtile, widget
 from libqtile.config import Click, Drag, Group, Key, Match, Screen, ScratchPad, DropDown
 from libqtile.lazy import lazy
+from libqtile import hook
+import colors
+import os
+
+# color = colors.Neutral
+color = colors.Nord
+
+
+def execute_in_background(cmd: str):
+    os.system(f"{cmd} &")
+
+
+@hook.subscribe.startup_once
+def start_once() -> None:
+    execute_in_background("picom")
+    execute_in_background("xset b off")
+    execute_in_background("xset b 0 0 0")
+
 
 mod = "mod4"
 terminal = "kitty --title Kitty"
@@ -54,7 +72,7 @@ keys = [
         desc="Launch terminal",
     ),
     # Toggle between different layouts as defined below
-    Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
+    Key([mod], "s", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
     Key(
         [mod],
@@ -72,6 +90,12 @@ keys = [
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     # Key([mod], "d", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
     Key(
+        [mod, "shift"],
+        "d",
+        lazy.spawn("rofi -show run"),
+        desc="Spawn a command using a prompt widget",
+    ),
+    Key(
         [mod],
         "d",
         lazy.spawn("bash -c ~/.config/rofi/wrappers/runner"),
@@ -82,6 +106,36 @@ keys = [
         "e",
         lazy.spawn("bash -c ~/.config/rofi/wrappers/rofi-power"),
         desc="Spawn a command using a prompt widget",
+    ),
+    Key(
+        [],
+        "XF86AudioRaiseVolume",
+        lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ +10%"),
+    ),
+    Key(
+        [],
+        "XF86AudioLowerVolume",
+        lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -10%"),
+    ),
+    Key(
+        [],
+        "XF86AudioMute",
+        lazy.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle"),
+    ),
+    Key(
+        [],
+        "XF86AudioMicMute",
+        lazy.spawn("pactl set-source-mute @DEFAULT_SOURCE@ toggle"),
+    ),
+    Key(
+        [],
+        "XF86MonBrightnessUp",
+        lazy.spawn("brightnessctl set +10%"),
+    ),
+    Key(
+        [],
+        "XF86MonBrightnessDown",
+        lazy.spawn("brightnessctl set 10%-"),
     ),
 ]
 
@@ -143,7 +197,7 @@ groups.append(
         [
             default_dropdown(
                 "Ranger",
-                "kitty -o font_size=18 -e ranger",
+                "kitty -o font_size=16 -e ranger",
             ),
             default_dropdown(
                 "Pavucontrol",
@@ -175,6 +229,7 @@ layouts = [
         border_width=2,
         margin=5,
     ),  # pyright: ignore[]
+    layout.TreeTab(),
     # layout.Max(),                                                              # pyright: ignore[]
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
@@ -184,66 +239,79 @@ layouts = [
     # layout.MonadWide(),
     # layout.RatioTile(),
     # layout.Tile(),
-    # layout.TreeTab(),
     # layout.VerticalTile(),
     # layout.Zoomy(),
 ]
 
 widget_defaults = dict(
     font="FiraCode Nerd Font",
-    fontsize=16,
+    fontsize=18,
     padding=3,
 )
 extension_defaults = widget_defaults.copy()
 
 
-class Nord:
-    black: str = "#2E3440"  ## nord0 in palette
-    dark_gray: str = "#3B4252"  ## nord1 in palette
-    gray: str = "#434C5E"  ## nord2 in palette
-    light_gray: str = "#4C566A"  ## nord3 in palette
-    light_gray_bright: str = "#616E88"  ## out of palette
-    darkest_white: str = "#D8DEE9"  ## nord4 in palette
-    darker_white: str = "#E5E9F0"  ## nord5 in palette
-    white: str = "#ECEFF4"  ## nord6 in palette
-    teal: str = "#8FBCBB"  ## nord7 in palette
-    off_blue: str = "#88C0D0"  ## nord8 in palette
-    glacier: str = "#81A1C1"  ## nord9 in palette
-    blue: str = "#5E81AC"  ## nord10 in palette
-    red: str = "#BF616A"  ## nord11 in palette
-    orange: str = "#D08770"  ## nord12 in palette
-    yellow: str = "#EBCB8B"  ## nord13 in palette
-    green: str = "#A3BE8C"  ## nord14 in palette
-    purple: str = "#B48EAD"  ## nord15 in palette
-    none: str = "NONE"
+def widget_add_separator():
+    return widget.Sep(linewidth=10, background=color.bg, foreground=color.bg)
+
+
+def widget_left_half_circle(fg: str = color.fg):
+    return widget.TextBox(
+        text="",
+        padding=0,
+        fontsize="30",
+        foreground=fg,
+        background=color.bg,
+    )
+
+
+def widget_right_half_circle(fg: str = color.fg):
+    return widget.TextBox(
+        text="",
+        font="CaskaydiaCove Nerd Font",
+        padding=0,
+        fontsize="30",
+        foreground=fg,
+        background=color.bg,
+    )
+
+
+def widget_power_menu():
+    return widget.TextBox(
+        text="󰐦 ",
+        background="#BF616A",
+        mouse_callbacks={
+            "Button1": lambda: qtile.cmd_spawn(
+                "bash -c ~/.config/qtile/rofi/rofi-power"
+            )
+        },
+    )
 
 
 screens = [
     Screen(
-        bottom=bar.Bar(
+        top=bar.Bar(
             [
                 widget.GroupBox(
-                    # font="CaskaydiaCove Nerd Font",
-                    inactive=Nord.gray,
-                    highlight_method="text",
-                    background=Nord.glacier,
-                    this_current_screen_border=Nord.blue,
-                    other_current_screen_border=Nord.blue,
-                    other_screen_border=Nord.glacier,
-                    block_highlight_text_color="#FFFFFF",
-                ),
-                widget.TextBox(
-                    text="",
                     font="CaskaydiaCove Nerd Font",
-                    padding=0,
-                    fontsize="30",
-                    foreground=Nord.glacier,
-                    background=Nord.dark_gray,
+                    active=color.black,
+                    inactive=color.light_gray,
+                    highlight_method="block",
+                    background=color.fg,
+                    this_current_screen_border=color.darkest_white,
+                    other_current_screen_border=color.dark_gray,
+                    # other_screen_border=Nord.glacier,
+                    block_highlight_text_color=color.black,
                 ),
+                widget_right_half_circle(color.fg),
                 widget.Prompt(),
-                widget.TextBox(text="[]=", background=Nord.dark_gray),
+                # widget.TextBox(
+                #     text="[]=",
+                #     # background=Nord.dark_gray
+                # ),
                 widget.WindowName(
-                    background=Nord.dark_gray,
+                    fmt=" 󱂬 {}",
+                    background=color.bg,
                 ),
                 widget.Chord(
                     chords_colors={
@@ -251,15 +319,42 @@ screens = [
                     },
                     name_transform=lambda name: name.upper(),
                 ),
-                widget.TextBox("default config", name="default"),
-                widget.TextBox("Press &lt;M-d&gt; to spawn", foreground="#d75f5f"),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
                 # widget.StatusNotifier(),
-                widget.Systray(),
-                widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
-                widget.QuickExit(),
+                widget_left_half_circle(),
+                widget.Systray(
+                    background=color.fg,
+                ),
+                widget_right_half_circle(),
+                widget_add_separator(),
+                widget_left_half_circle(color.fg),
+                widget.Battery(
+                    font="CaskaydiaCove Nerd Font",
+                    # fontsize=18,
+                    background=color.fg,
+                    foreground=color.black,
+                    charge_char="󱟠",
+                    discharge_char="󱟞",
+                    empty="󱟩",
+                    format="{char} {percent:2.0%}",
+                ),
+                widget_right_half_circle(color.fg),
+                widget_add_separator(),
+                widget_left_half_circle(),
+                widget.Clock(
+                    fmt="󰥔 {}",
+                    format="%H:%M",
+                    background=color.fg,
+                    foreground=color.black,
+                ),
+                widget_right_half_circle(),
+                widget_add_separator(),
+                widget_left_half_circle(fg="#BF616A"),
+                widget_power_menu(),
             ],
-            24,
+            30,
+            # background = color.transparent,
+            opacity=0.75,
             # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
             # "#434c5e"=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
         ),

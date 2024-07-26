@@ -1,0 +1,7 @@
+#! /usr/bin/env bash
+rofi \
+   -show p \
+   -modi p:'~/.config/qtile/rofi/power.sh --symbols-font "Symbols Nerd Font Mono"' \
+   -kb-row-down "Control-n,Down" \
+   -kb-row-up "Control-p,Up" \
+   -theme-str 'window {width: 16em;} listview {lines: 6;}'
