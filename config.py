@@ -77,6 +77,12 @@ keys = [
         lazy.spawn("bash -c ~/.config/rofi/wrappers/runner"),
         desc="Spawn a command using a prompt widget",
     ),
+    Key(
+        [mod, "shift"],
+        "e",
+        lazy.spawn("bash -c ~/.config/rofi/wrappers/rofi-power"),
+        desc="Spawn a command using a prompt widget",
+    ),
 ]
 
 # Add key bindings to switch VTs in Wayland.
