@@ -107,7 +107,7 @@ for i in groups:
             Key(
                 [mod],
                 i.name,
-                lazy.group[i.name].toscreen(),
+                lazy.group[i.name].toscreen(toggle=True),
                 desc="Switch to group {}".format(i.name),
             ),
             # mod + shift + group number = switch to & move focused window to group
@@ -147,7 +147,7 @@ groups.append(
             ),
             default_dropdown(
                 "Pavucontrol",
-                "/usr/bin/pavucontrol",
+                "/usr/bin/pavucontrol-qt",
             ),
         ],
     )
@@ -197,14 +197,54 @@ widget_defaults = dict(
 extension_defaults = widget_defaults.copy()
 
 
+class Nord:
+    black: str = "#2E3440"  ## nord0 in palette
+    dark_gray: str = "#3B4252"  ## nord1 in palette
+    gray: str = "#434C5E"  ## nord2 in palette
+    light_gray: str = "#4C566A"  ## nord3 in palette
+    light_gray_bright: str = "#616E88"  ## out of palette
+    darkest_white: str = "#D8DEE9"  ## nord4 in palette
+    darker_white: str = "#E5E9F0"  ## nord5 in palette
+    white: str = "#ECEFF4"  ## nord6 in palette
+    teal: str = "#8FBCBB"  ## nord7 in palette
+    off_blue: str = "#88C0D0"  ## nord8 in palette
+    glacier: str = "#81A1C1"  ## nord9 in palette
+    blue: str = "#5E81AC"  ## nord10 in palette
+    red: str = "#BF616A"  ## nord11 in palette
+    orange: str = "#D08770"  ## nord12 in palette
+    yellow: str = "#EBCB8B"  ## nord13 in palette
+    green: str = "#A3BE8C"  ## nord14 in palette
+    purple: str = "#B48EAD"  ## nord15 in palette
+    none: str = "NONE"
+
+
 screens = [
     Screen(
         bottom=bar.Bar(
             [
-                widget.CurrentLayout(),
-                widget.GroupBox(),
+                widget.GroupBox(
+                    # font="CaskaydiaCove Nerd Font",
+                    inactive=Nord.gray,
+                    highlight_method="text",
+                    background=Nord.glacier,
+                    this_current_screen_border=Nord.blue,
+                    other_current_screen_border=Nord.blue,
+                    other_screen_border=Nord.glacier,
+                    block_highlight_text_color="#FFFFFF",
+                ),
+                widget.TextBox(
+                    text="",
+                    font="CaskaydiaCove Nerd Font",
+                    padding=0,
+                    fontsize="30",
+                    foreground=Nord.glacier,
+                    background=Nord.dark_gray,
+                ),
                 widget.Prompt(),
-                widget.WindowName(),
+                widget.TextBox(text="[]=", background=Nord.dark_gray),
+                widget.WindowName(
+                    background=Nord.dark_gray,
+                ),
                 widget.Chord(
                     chords_colors={
                         "launch": ("#ff0000", "#ffffff"),
