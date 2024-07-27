@@ -8,10 +8,10 @@ nord = colors.Nord
 
 
 # FONT = "SpaceMono Nerd Font"
-FONT = "RobotoMono Nerd Font"
+FONT = "CaskaydiaCove Nerd Font"
 FONTCONFIG = {
     "font": FONT,
-    "fontsize": 15,
+    "fontsize": 17,
 }
 
 back_slash = {"decorations": [PowerLineDecoration(path="back_slash")]}
@@ -227,7 +227,15 @@ def powermenu():
 
 def LTreeTab():
     return layout.TreeTab(
-        **FONTCONFIG,
+        font="FiraCode Nerd Font Bold",
+        fontsize=17,
+        # border_width=2,
+        section_fontsize=15,
+        section_fg=nord.purple,
+        section_bottom=10,
+        sections=["DEFAULT", ""],
+        inactive_bg=nord.gray,
+        panel_width=200,
         active_bg=nord.glacier,
-        bg_color=nord.black,
+        bg_color=nord.bg,
     )

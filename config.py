@@ -25,6 +25,7 @@ def start_once() -> None:
     execute_in_background("picom")
     execute_in_background("xset b off")
     execute_in_background("xset b 0 0 0")
+    execute_in_background("barrier")
 
 
 mod = "mod4"
@@ -51,8 +52,20 @@ keys = [
         lazy.layout.shuffle_right(),
         desc="Move window to the right",
     ),
-    Key([mod, "shift"], "j", lazy.layout.shuffle_down(), desc="Move window down"),
-    Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
+    Key(
+        [mod, "shift"],
+        "j",
+        lazy.layout.shuffle_down(),
+        lazy.layout.move_down().when(layout=["treetab"]),
+        desc="Move window down",
+    ),
+    Key(
+        [mod, "shift"],
+        "k",
+        lazy.layout.shuffle_up(),
+        lazy.layout.move_up().when(layout=["treetab"]),
+        desc="Move window up",
+    ),
     # Grow windows. If current window is on the edge of screen and direction
     # will be to screen edge - window would shrink.
     Key([mod, "control"], "h", lazy.layout.grow_left(), desc="Grow window to the left"),
@@ -152,6 +165,18 @@ keys = [
         desc="Alternate between two most recent windows",
     ),
     Key([mod], "Tab", lazy.screen.toggle_group(), desc="Last active group"),
+    Key(
+        [],
+        "Print",
+        lazy.spawn(
+            "bash -c 'maim -s | xclip -selection clipboard -t image/png && notify-send 'Selection Saved to clipboard''"
+        ),
+    ),
+    Key(
+        [mod],
+        "Print",
+        lazy.spawn("spectacle"),
+    ),
 ]
 
 # Add key bindings to switch VTs in Wayland.
@@ -168,7 +193,19 @@ for vt in range(1, 8):
     )
 
 
-groups = [Group(i) for i in "123456789"]
+groups = [
+    Group("1"),
+    Group("2"),
+    Group("3", layout="treetab"),
+    Group("4"),
+    Group("5"),
+    Group("6"),
+    Group("7"),
+    Group("8"),
+    Group("9"),
+]
+
+
 for i in groups:
     keys.extend(
         [
@@ -237,6 +274,8 @@ keys.extend(
     ]
 )
 
+treetab = nr.LTreeTab()
+
 layouts = [
     layout.Columns(
         border_focus=[nord.black],
@@ -245,7 +284,7 @@ layouts = [
         margin=5,
         border_on_single=True,
     ),  # pyright: ignore[]
-    nr.LTreeTab(),
+    treetab,
     # layout.Max(),                                                              # pyright: ignore[]
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
@@ -283,6 +322,7 @@ PRIMARY_MONITOR_WIDGETS = [
     *nr.group_box(),
     *nr.window_name(),
     *nr.systray(),
+    *nr.volume(),
     *nr.memory(),
     *nr.battery(),
     *nr.clock(),
@@ -354,6 +394,7 @@ floating_layout = layout.Floating(
         Match(wm_class="makebranch"),  # gitk
         Match(wm_class="maketag"),  # gitk
         Match(wm_class="Gpick"),
+        Match(wm_class="spectacle"),
         Match(wm_class="ssh-askpass"),  # ssh-askpass
         Match(title="branchdialog"),  # gitk
         Match(title="pinentry"),  # GPG key password entry
