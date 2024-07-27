@@ -88,7 +88,8 @@ def group_box():
             other_current_screen_border=nord.glacier,
             other_screen_border=nord.glacier,
             # block_highlight_text_color=nord.black,
-            **back_slash,
+            # **back_slash,
+            **powerline,
         ),
         # _widget_right_half_circle(nord.fg),
     ]
@@ -202,7 +203,8 @@ def startmenu():
                     "bash -c ~/.config/rofi/wrappers/runner"
                 )
             },
-            **back_slash,
+            # **back_slash,
+            **powerline,
         ),
         # _widget_right_half_triangle(fg=nord.blue, bg=nord.fg),
     ]
