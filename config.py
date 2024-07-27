@@ -1,16 +1,23 @@
-from libqtile import bar, layout, qtile, widget
+from libqtile import bar, layout, qtile
 from libqtile.config import Click, Drag, Group, Key, Match, Screen, ScratchPad, DropDown
 from libqtile.lazy import lazy
 from libqtile import hook
 import colors
+import nord as nr
 import os
 
 # color = colors.Neutral
-color = colors.Nord
+nord = colors.Nord
 
 
 def execute_in_background(cmd: str):
     os.system(f"{cmd} &")
+
+
+execute_in_background("nitrogen --restore")
+execute_in_background("xhost +si:localuser:$USER")
+
+BORDER_WIDTH = 2
 
 
 @hook.subscribe.startup_once
@@ -104,7 +111,7 @@ keys = [
     Key(
         [mod, "shift"],
         "e",
-        lazy.spawn("bash -c ~/.config/rofi/wrappers/rofi-power"),
+        lazy.spawn("bash -c ~/.config/qtile/rofi/rofi-power"),
         desc="Spawn a command using a prompt widget",
     ),
     Key(
@@ -224,12 +231,13 @@ keys.extend(
 
 layouts = [
     layout.Columns(
-        border_focus=["#434c5e"],
-        border_focus_stack=["#434c5e"],
-        border_width=2,
+        border_focus=[nord.black],
+        border_focus_stack=[nord.blue],
+        border_width=BORDER_WIDTH,
         margin=5,
+        border_on_single=True,
     ),  # pyright: ignore[]
-    layout.TreeTab(),
+    nr.LTreeTab(),
     # layout.Max(),                                                              # pyright: ignore[]
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
@@ -244,153 +252,63 @@ layouts = [
 ]
 
 widget_defaults = dict(
-    font="FiraCode Nerd Font",
+    font="CaskaydiaCove Nerd Font",
     fontsize=18,
     padding=3,
 )
 extension_defaults = widget_defaults.copy()
 
+DEFAULT_WIDGETS = [
+    *nr.group_box(),
+    *nr.window_name(),
+    *nr.volume(),
+    *nr.wlan(),
+    *nr.memory(),
+    *nr.battery(),
+    *nr.clock(),
+    *nr.powermenu(),
+]
 
-def widget_add_separator():
-    return widget.Sep(linewidth=10, background=color.bg, foreground=color.bg)
+PRIMARY_MONITOR_WIDGETS = [
+    *nr.group_box(),
+    *nr.window_name(),
+    *nr.systray(),
+    *nr.memory(),
+    *nr.battery(),
+    *nr.clock(),
+    *nr.powermenu(),
+]
+
+primary_bar = bar.Bar(
+    PRIMARY_MONITOR_WIDGETS,
+    30,
+    margin=10,
+    border_width=[3, 3, 3, 3],
+    border_color=nord.black,
+    # opacity=0.75,
+)
+
+default_bar = bar.Bar(
+    DEFAULT_WIDGETS,
+    30,
+    margin=10,
+    border_width=[2, 2, 2, 2],
+    border_color=nord.black,
+)
 
 
-def widget_left_half_circle(fg: str = color.fg):
-    return widget.TextBox(
-        text="",
-        padding=0,
-        fontsize="30",
-        foreground=fg,
-        background=color.bg,
-    )
-
-
-def widget_right_half_circle(fg: str = color.fg):
-    return widget.TextBox(
-        text="",
-        font="CaskaydiaCove Nerd Font",
-        padding=0,
-        fontsize="30",
-        foreground=fg,
-        background=color.bg,
-    )
-
-
-def widget_power_menu():
-    return widget.TextBox(
-        text="󰐦 ",
-        background="#BF616A",
-        mouse_callbacks={
-            "Button1": lambda: qtile.cmd_spawn(
-                "bash -c ~/.config/qtile/rofi/rofi-power"
-            )
-        },
-    )
+@hook.subscribe.startup
+def _():
+    primary_bar.window.window.set_property("QTILE_BAR", 1, "CARDINAL", 32)
+    default_bar.window.window.set_property("QTILE_BAR", 1, "CARDINAL", 32)
 
 
 screens = [
     Screen(
-        top=bar.Bar(
-            [
-                widget.GroupBox(
-                    font="CaskaydiaCove Nerd Font",
-                    active=color.black,
-                    inactive=color.light_gray,
-                    highlight_method="block",
-                    background=color.fg,
-                    this_current_screen_border=color.darkest_white,
-                    other_current_screen_border=color.dark_gray,
-                    # other_screen_border=Nord.glacier,
-                    block_highlight_text_color=color.black,
-                ),
-                widget_right_half_circle(color.fg),
-                widget.Prompt(),
-                # widget.TextBox(
-                #     text="[]=",
-                #     # background=Nord.dark_gray
-                # ),
-                widget.WindowName(
-                    fmt=" 󱂬 {}",
-                    background=color.bg,
-                ),
-                widget.Chord(
-                    chords_colors={
-                        "launch": ("#ff0000", "#ffffff"),
-                    },
-                    name_transform=lambda name: name.upper(),
-                ),
-                # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
-                # widget.StatusNotifier(),
-                widget_left_half_circle(),
-                widget.Systray(
-                    background=color.fg,
-                ),
-                widget_right_half_circle(),
-                widget_add_separator(),
-                widget_left_half_circle(color.fg),
-                widget.Battery(
-                    font="CaskaydiaCove Nerd Font",
-                    # fontsize=18,
-                    background=color.fg,
-                    foreground=color.black,
-                    charge_char="󱟠",
-                    discharge_char="󱟞",
-                    empty="󱟩",
-                    format="{char} {percent:2.0%}",
-                ),
-                widget_right_half_circle(color.fg),
-                widget_add_separator(),
-                widget_left_half_circle(),
-                widget.Clock(
-                    fmt="󰥔 {}",
-                    format="%H:%M",
-                    background=color.fg,
-                    foreground=color.black,
-                ),
-                widget_right_half_circle(),
-                widget_add_separator(),
-                widget_left_half_circle(fg="#BF616A"),
-                widget_power_menu(),
-            ],
-            30,
-            # background = color.transparent,
-            opacity=0.75,
-            # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
-            # "#434c5e"=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
-        ),
-        # You can uncomment this variable if you see that on X11 floating resize/moving is laggy
-        # By default we handle these events delayed to already improve performance, however your system might still be struggling
-        # This variable is set to None (no cap) by default, but you can set it to 60 to indicate that you limit it to 60 events per second
-        # x11_drag_polling_rate = 60,
+        top=primary_bar,
     ),
     Screen(
-        bottom=bar.Bar(
-            [
-                widget.CurrentLayout(),
-                widget.GroupBox(),
-                widget.Prompt(),
-                widget.WindowName(),
-                widget.Chord(
-                    chords_colors={
-                        "launch": ("#ff0000", "#ffffff"),
-                    },
-                    name_transform=lambda name: name.upper(),
-                ),
-                widget.TextBox("default config", name="default"),
-                widget.TextBox("Press &lt;M-d&gt; to spawn", foreground="#d75f5f"),
-                # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
-                # widget.StatusNotifier(),
-                widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
-                widget.QuickExit(),
-            ],
-            24,
-            # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
-            # "#434c5e"=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
-        ),
-        # You can uncomment this variable if you see that on X11 floating resize/moving is laggy
-        # By default we handle these events delayed to already improve performance, however your system might still be struggling
-        # This variable is set to None (no cap) by default, but you can set it to 60 to indicate that you limit it to 60 events per second
-        # x11_drag_polling_rate = 60,
+        top=default_bar,
     ),
 ]
 
@@ -415,7 +333,8 @@ bring_front_click = False
 floats_kept_above = True
 cursor_warp = False
 floating_layout = layout.Floating(
-    border_focus=["#434c5e"],
+    border_focus=[nord.black],
+    border_width=BORDER_WIDTH,
     float_rules=[
         # Run the utility of `xprop` to see the wm class and name of an X client.
         *layout.Floating.default_float_rules,
