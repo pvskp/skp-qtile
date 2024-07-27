@@ -14,6 +14,8 @@ FONTCONFIG = {
     "fontsize": 15,
 }
 
+back_slash = {"decorations": [PowerLineDecoration(path="back_slash")]}
+
 powerline = {
     "decorations": [
         PowerLineDecoration(
@@ -86,6 +88,7 @@ def group_box():
             other_current_screen_border=nord.glacier,
             other_screen_border=nord.glacier,
             # block_highlight_text_color=nord.black,
+            **back_slash,
         ),
         # _widget_right_half_circle(nord.fg),
     ]
@@ -191,15 +194,15 @@ def clock():
 def startmenu():
     return [
         widget.TextBox(
-            text=" ",
-            fontsize=20,
+            text="  ",
             foreground=nord.green,
-            background=nord.blue,
+            background=nord.light_gray,
             mouse_callbacks={
                 "Button1": lambda: qtile.cmd_spawn(
-                    "bash -c ~/.config/qtile/rofi/rofi-power"
+                    "bash -c ~/.config/rofi/wrappers/runner"
                 )
             },
+            **back_slash,
         ),
         # _widget_right_half_triangle(fg=nord.blue, bg=nord.fg),
     ]

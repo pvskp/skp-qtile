@@ -212,7 +212,7 @@ groups.append(
         [
             default_dropdown(
                 "Ranger",
-                "kitty -o font_size=16 -e ranger",
+                "kitty -e ranger",
             ),
             default_dropdown(
                 "Pavucontrol",
@@ -267,6 +267,7 @@ widget_defaults = dict(
 extension_defaults = widget_defaults.copy()
 
 DEFAULT_WIDGETS = [
+    *nr.startmenu(),
     *nr.group_box(),
     *nr.window_name(),
     *nr.volume(),
@@ -278,6 +279,7 @@ DEFAULT_WIDGETS = [
 ]
 
 PRIMARY_MONITOR_WIDGETS = [
+    *nr.startmenu(),
     *nr.group_box(),
     *nr.window_name(),
     *nr.systray(),
@@ -287,11 +289,13 @@ PRIMARY_MONITOR_WIDGETS = [
     *nr.powermenu(),
 ]
 
+BAR_MARGIN = 4
+
 primary_bar = bar.Bar(
     PRIMARY_MONITOR_WIDGETS,
     30,
-    margin=10,
-    border_width=[3, 3, 3, 3],
+    margin=BAR_MARGIN,
+    border_width=[2, 2, 2, 2],
     border_color=nord.black,
     # opacity=0.75,
 )
@@ -299,7 +303,7 @@ primary_bar = bar.Bar(
 default_bar = bar.Bar(
     DEFAULT_WIDGETS,
     30,
-    margin=10,
+    margin=BAR_MARGIN,
     border_width=[2, 2, 2, 2],
     border_color=nord.black,
 )
