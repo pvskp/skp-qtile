@@ -28,6 +28,7 @@ def start_once() -> None:
 
 
 mod = "mod4"
+alt = "mod1"
 terminal = "kitty --title Kitty"
 
 keys = [
@@ -144,6 +145,13 @@ keys = [
         "XF86MonBrightnessDown",
         lazy.spawn("brightnessctl set 10%-"),
     ),
+    Key(
+        [alt],
+        "Tab",
+        lazy.group.focus_back(),
+        desc="Alternate between two most recent windows",
+    ),
+    Key([mod], "Tab", lazy.screen.toggle_group(), desc="Last active group"),
 ]
 
 # Add key bindings to switch VTs in Wayland.
