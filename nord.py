@@ -130,6 +130,7 @@ def wlan():
             font=FONT,
             fmt=" 󰖩 {}",
             interface="wlp1s0",
+            format="{essid}",
             foreground=nord.white,
             background=nord.blue,
             **powerline,
