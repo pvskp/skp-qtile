@@ -294,7 +294,7 @@ layouts = [
 
 widget_defaults = dict(
     font="CaskaydiaCove Nerd Font",
-    fontsize=18,
+    # fontsize=18,
     padding=3,
 )
 extension_defaults = widget_defaults.copy()
@@ -317,6 +317,7 @@ PRIMARY_MONITOR_WIDGETS = [
     *nr.window_name(),
     *nr.systray(),
     *nr.volume(),
+    *nr.wlan(),
     *nr.memory(),
     *nr.battery(),
     *nr.clock(),
@@ -341,12 +342,6 @@ default_bar = bar.Bar(
     border_width=[2, 2, 2, 2],
     border_color=nord.black,
 )
-
-
-@hook.subscribe.startup
-def _():
-    primary_bar.window.window.set_property("QTILE_BAR", 1, "CARDINAL", 32)
-    default_bar.window.window.set_property("QTILE_BAR", 1, "CARDINAL", 32)
 
 
 screens = [

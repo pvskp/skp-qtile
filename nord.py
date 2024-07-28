@@ -2,6 +2,7 @@ from libqtile import layout, qtile
 from qtile_extras import widget
 from qtile_extras.widget.decorations import PowerLineDecoration
 import colors
+import utils
 
 
 nord = colors.Nord
@@ -9,6 +10,7 @@ nord = colors.Nord
 
 # FONT = "SpaceMono Nerd Font"
 FONT = "RobotoMono Nerd Font"
+
 FONTCONFIG = {
     "font": FONT,
     "fontsize": 17,
@@ -133,9 +135,9 @@ def wlan():
         widget.Wlan(
             **FONTCONFIG,
             fmt=" 󰖩 {}",
-            interface="wlp1s0",
+            interface=utils.get_current_wireless_interface(),
             format="{essid}",
-            foreground=nord.white,
+            foreground=nord.black,
             background=nord.blue,
             **powerline,
         ),
