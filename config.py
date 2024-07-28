@@ -1,13 +1,10 @@
-from libqtile import bar, layout, qtile
-from libqtile.config import Click, Drag, Group, Key, Match, Screen, ScratchPad, DropDown
+from libqtile import qtile
+from libqtile.config import Click, Drag, Group, Key, Screen, ScratchPad, DropDown
 from libqtile.lazy import lazy
 from libqtile import hook
-import colors
-import nord as nr
+from themes import nord_minimal as theme
 import os
-
-# color = colors.Neutral
-nord = colors.Nord
+import globals
 
 
 def execute_in_background(cmd: str):
@@ -30,7 +27,7 @@ def start_once() -> None:
 
 mod = "mod4"
 alt = "mod1"
-terminal = "kitty --title Kitty"
+terminal = globals.TERMINAL
 
 keys = [
     # A list of available commands that can be bound to keys can be found
@@ -199,6 +196,7 @@ groups = [
     Group("9"),
 ]
 
+group_k = "123456789"
 
 for i in groups:
     keys.extend(
@@ -268,29 +266,7 @@ keys.extend(
     ]
 )
 
-treetab = nr.LTreeTab()
-
-layouts = [
-    layout.Columns(
-        border_focus=[nord.black],
-        border_focus_stack=[nord.blue],
-        border_width=BORDER_WIDTH,
-        margin=5,
-        border_on_single=True,
-    ),  # pyright: ignore[]
-    treetab,
-    # layout.Max(),                                                              # pyright: ignore[]
-    # Try more layouts by unleashing below layouts.
-    # layout.Stack(num_stacks=2),
-    # layout.Bsp(),
-    # layout.Matrix(),
-    # layout.MonadTall(),
-    # layout.MonadWide(),
-    # layout.RatioTile(),
-    # layout.Tile(),
-    # layout.VerticalTile(),
-    # layout.Zoomy(),
-]
+layouts = theme.layouts()
 
 widget_defaults = dict(
     font="CaskaydiaCove Nerd Font",
@@ -299,57 +275,13 @@ widget_defaults = dict(
 )
 extension_defaults = widget_defaults.copy()
 
-DEFAULT_WIDGETS = [
-    *nr.startmenu(),
-    *nr.group_box(),
-    *nr.window_name(),
-    *nr.volume(),
-    *nr.wlan(),
-    *nr.memory(),
-    *nr.battery(),
-    *nr.clock(),
-    *nr.powermenu(),
-]
-
-PRIMARY_MONITOR_WIDGETS = [
-    *nr.startmenu(),
-    *nr.group_box(),
-    *nr.window_name(),
-    *nr.systray(),
-    *nr.volume(),
-    *nr.wlan(),
-    *nr.memory(),
-    *nr.battery(),
-    *nr.clock(),
-    *nr.powermenu(),
-]
-
-BAR_MARGIN = 4
-
-primary_bar = bar.Bar(
-    PRIMARY_MONITOR_WIDGETS,
-    30,
-    margin=BAR_MARGIN,
-    border_width=[2, 2, 2, 2],
-    border_color=nord.black,
-    # opacity=0.75,
-)
-
-default_bar = bar.Bar(
-    DEFAULT_WIDGETS,
-    30,
-    margin=BAR_MARGIN,
-    border_width=[2, 2, 2, 2],
-    border_color=nord.black,
-)
-
 
 screens = [
     Screen(
-        top=primary_bar,
+        top=theme.bars(primary=True),
     ),
     Screen(
-        top=default_bar,
+        top=theme.bars(primary=False),
     ),
 ]
 
@@ -373,22 +305,7 @@ follow_mouse_focus = True
 bring_front_click = False
 floats_kept_above = True
 cursor_warp = False
-floating_layout = layout.Floating(
-    border_focus=[nord.black],
-    border_width=BORDER_WIDTH,
-    float_rules=[
-        # Run the utility of `xprop` to see the wm class and name of an X client.
-        *layout.Floating.default_float_rules,
-        Match(wm_class="confirmreset"),  # gitk
-        Match(wm_class="makebranch"),  # gitk
-        Match(wm_class="maketag"),  # gitk
-        Match(wm_class="Gpick"),
-        Match(wm_class="spectacle"),
-        Match(wm_class="ssh-askpass"),  # ssh-askpass
-        Match(title="branchdialog"),  # gitk
-        Match(title="pinentry"),  # GPG key password entry
-    ],
-)
+floating_layout = theme.floating_layout()
 auto_fullscreen = True
 focus_on_window_activation = "smart"
 reconfigure_screens = True
