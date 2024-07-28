@@ -8,7 +8,7 @@ nord = colors.Nord
 
 
 # FONT = "SpaceMono Nerd Font"
-FONT = "CaskaydiaCove Nerd Font"
+FONT = "RobotoMono Nerd Font"
 FONTCONFIG = {
     "font": FONT,
     "fontsize": 17,
@@ -46,7 +46,7 @@ def _widget_right_half_triangle(fg: str = nord.fg, bg: str = nord.bg):
     return widget.TextBox(
         text="",
         padding=0,
-        fontsize="30",
+        **FONTCONFIG,
         foreground=fg,
         background=bg,
     )
@@ -56,7 +56,7 @@ def _widget_left_half_circle(fg: str = nord.fg, bg: str = nord.bg):
     return widget.TextBox(
         text="",
         padding=0,
-        fontsize="30",
+        **FONTCONFIG,
         foreground=fg,
         background=bg,
     )
@@ -65,9 +65,8 @@ def _widget_left_half_circle(fg: str = nord.fg, bg: str = nord.bg):
 def _widget_right_half_circle(fg: str = nord.fg, bg: str = nord.bg):
     return widget.TextBox(
         text="",
-        font=FONT,
+        **FONTCONFIG,
         padding=0,
-        fontsize="30",
         foreground=fg,
         background=bg,
     )
@@ -76,7 +75,7 @@ def _widget_right_half_circle(fg: str = nord.fg, bg: str = nord.bg):
 def group_box():
     return [
         widget.GroupBox(
-            font=FONT,
+            **FONTCONFIG,
             active=nord.black,
             inactive=nord.light_gray,
             highlight_method="line",
@@ -99,7 +98,7 @@ def window_name():
     return [
         widget.WindowName(
             fmt=" 󱂬 {}",
-            font=FONT,
+            **FONTCONFIG,
             background=nord.bg,
             **powerline,
         )
@@ -120,7 +119,7 @@ def systray():
 def memory():
     return [
         widget.Memory(
-            font=FONT,
+            **FONTCONFIG,
             fmt=" 󰍛{}",
             foreground=nord.black,
             background=nord.purple,
@@ -132,7 +131,7 @@ def memory():
 def wlan():
     return [
         widget.Wlan(
-            font=FONT,
+            **FONTCONFIG,
             fmt=" 󰖩 {}",
             interface="wlp1s0",
             format="{essid}",
@@ -146,7 +145,7 @@ def wlan():
 def volume():
     return [
         widget.Volume(
-            font=FONT,
+            **FONTCONFIG,
             fmt="   {}",
             foreground=nord.black,
             background=nord.off_blue,
@@ -159,7 +158,7 @@ def battery():
     return [
         # _widget_left_half_circle(fg=nord.yellow),
         widget.Battery(
-            font=FONT,
+            **FONTCONFIG,
             # fontshadow=nord.black,
             # fontsize=18,
             background=nord.yellow,
@@ -180,7 +179,7 @@ def clock():
     return [
         # _widget_left_half_circle(fg=nord.orange),
         widget.Clock(
-            font=FONT,
+            **FONTCONFIG,
             # fontshadow=nord.black,
             fmt=" 󰥔 {}",
             format="%H:%M",
@@ -195,6 +194,7 @@ def clock():
 def startmenu():
     return [
         widget.TextBox(
+            **FONTCONFIG,
             text="  ",
             foreground=nord.green,
             background=nord.light_gray,
@@ -215,6 +215,7 @@ def powermenu():
         # _widget_left_half_circle(fg=nord.red),
         widget.TextBox(
             text=" 󰐦 ",
+            **FONTCONFIG,
             background=nord.red,
             mouse_callbacks={
                 "Button1": lambda: qtile.cmd_spawn(
