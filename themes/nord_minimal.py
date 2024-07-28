@@ -54,7 +54,7 @@ powerline = {
             radius=3,
             filled=True,
             padding_x=0,
-            padding_y=2,
+            padding_y=4,
             group=False,
             use_widget_background=True,
             line_width=0,
@@ -95,7 +95,7 @@ def group_box():
         widget.GroupBox(
             **FONTCONFIG,
             active=nord.white,
-            inactive=nord.light_gray,
+            inactive=nord.light_gray_bright,
             highlight_method="text",
             highlight_color=[nord.darkest_white, nord.darkest_white],
             background=nord.gray,
@@ -147,7 +147,7 @@ def wlan():
     return [
         widget.Wlan(
             **FONTCONFIG,
-            fmt=" 󰖩 {} ",
+            fmt=" 󰖩  {} ",
             interface=utils.get_current_wireless_interface(),
             format="{essid}",
             foreground=nord.white,
@@ -287,16 +287,16 @@ def bars(primary: bool = False):
         *powermenu(),
         text_separator(),
     ]
-    bar_margin = 3
+    bar_margin = 0
 
     # if primary:
     #     widgets.insert(3, *systray())
 
     return bar.Bar(
         widgets,
-        33,
+        35,
         margin=bar_margin,
-        border_width=[2, 2, 2, 2],
+        border_width=[0, 0, 0, 0],
         border_color=nord.black,
         background=nord.bg,
     )
