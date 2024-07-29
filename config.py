@@ -169,6 +169,20 @@ keys = [
         "Print",
         lazy.spawn("spectacle"),
     ),
+    Key(
+        [alt, "shift"],
+        "1",
+        lazy.spawn(
+            'bash -c \'setxkbmap us -variant intl && notify-send "Keyboard Layout" "Switched to us -variant intl"\''
+        ),
+    ),
+    Key(
+        [alt, "shift"],
+        "2",
+        lazy.spawn(
+            'bash -c \'setxkbmap us && notify-send "Keyboard Layout" "Switched to us"\''
+        ),
+    ),
 ]
 
 # Add key bindings to switch VTs in Wayland.
