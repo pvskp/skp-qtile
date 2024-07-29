@@ -7,6 +7,7 @@ from layouts import default as myly
 
 class Nord:
     bg: str = "#2E3440"  ## nord0 in palette
+    darker: str = "#22262E"
     transparent: str = "#2E3440b3"  ## nord0 in palette
     fg: str = "#81A1C1"  ## nord0 in palette
     black: str = "#000000"  ## nord0 in palette
@@ -280,7 +281,7 @@ def layouts():
             section_fg=nord.purple,
             inactive_bg=nord.gray,
             active_bg=nord.glacier,
-            bg_color=nord.bg,
+            bg_color=nord.darker,
         ),
     )
 
