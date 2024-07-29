@@ -23,6 +23,7 @@ def start_once() -> None:
     execute_in_background("xset b off")
     execute_in_background("xset b 0 0 0")
     execute_in_background("barrier")
+    execute_in_background("/usr/lib/polkit-kde-authentication-agent-1")
 
 
 mod = "mod4"
@@ -184,19 +185,52 @@ for vt in range(1, 8):
     )
 
 
-groups = [
-    Group("1"),
-    Group("2"),
-    Group("3", layout="treetab"),
-    Group("4"),
-    Group("5"),
-    Group("6"),
-    Group("7"),
-    Group("8"),
-    Group("9"),
+groups = []
+
+group_names = [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
 ]
 
-group_k = "123456789"
+group_labels = [
+    " ",
+    " ",
+    " ",
+    " ",
+    " ",
+    " ",
+    " ",
+    " ",
+    " ",
+]
+
+group_layouts = [
+    "columns",
+    "columns",
+    "treetab",
+    "columns",
+    "columns",
+    "columns",
+    "columns",
+    "columns",
+    "columns",
+]
+
+for i in range(len(group_names)):
+    groups.append(
+        Group(
+            name=group_names[i],
+            layout=group_layouts[i].lower(),
+            label=group_labels[i],
+        )
+    )
 
 for i in groups:
     keys.extend(
