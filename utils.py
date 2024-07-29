@@ -17,5 +17,9 @@ def open_htop() -> None:
     qtile.cmd_spawn(f"{globals.TERMINAL} -e htop")
 
 
+def update_system() -> None:
+    qtile.cmd_spawn(f"{globals.TERMINAL} --hold -e sudo pacman -Syu")
+
+
 def open_nmtui() -> None:
     qtile.cmd_spawn(f"{globals.TERMINAL} -e nmtui")
