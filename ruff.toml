@@ -1,0 +1,3 @@
+# exclude = ["config.py"]
+line-length = 200
+indent-width = 4

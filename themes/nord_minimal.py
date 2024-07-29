@@ -311,6 +311,7 @@ def bars(primary: bool = False):
         *startmenu(),
         text_separator(),
         *group_box(),
+        text_separator(),
         *window_name(),
         text_separator(),
         *check_updates(),
@@ -331,7 +332,8 @@ def bars(primary: bool = False):
     bar_margin = 0
 
     if primary:
-        widgets = widgets[0:6] + systray() + widgets[6:]
+        systray_pos = 7
+        widgets = widgets[0:systray_pos] + systray() + widgets[systray_pos:]
 
     return bar.Bar(
         widgets,

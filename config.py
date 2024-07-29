@@ -41,35 +41,19 @@ keys = [
     Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
     # Move windows between left/right columns or move up/down in current stack.
     # Moving out of range in Columns layout will create new column.
-    Key(
-        [mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"
-    ),
+    Key([mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"),
     Key(
         [mod, "shift"],
         "l",
         lazy.layout.shuffle_right(),
         desc="Move window to the right",
     ),
-    Key(
-        [mod, "shift"],
-        "j",
-        lazy.layout.shuffle_down(),
-        lazy.layout.move_down().when(layout=["treetab"]),
-        desc="Move window down",
-    ),
-    Key(
-        [mod, "shift"],
-        "k",
-        lazy.layout.shuffle_up(),
-        lazy.layout.move_up().when(layout=["treetab"]),
-        desc="Move window up",
-    ),
+    Key([mod, "shift"], "j", lazy.layout.shuffle_down(), lazy.layout.move_down().when(layout=["treetab"]), desc="Move window down"),
+    Key([mod, "shift"], "k", lazy.layout.shuffle_up(), lazy.layout.move_up().when(layout=["treetab"]), desc="Move window up"),
     # Grow windows. If current window is on the edge of screen and direction
     # will be to screen edge - window would shrink.
     Key([mod, "control"], "h", lazy.layout.grow_left(), desc="Grow window to the left"),
-    Key(
-        [mod, "control"], "l", lazy.layout.grow_right(), desc="Grow window to the right"
-    ),
+    Key([mod, "control"], "l", lazy.layout.grow_right(), desc="Grow window to the right"),
     Key([mod, "control"], "j", lazy.layout.grow_down(), desc="Grow window down"),
     Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
     Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
@@ -78,111 +62,30 @@ keys = [
     # Unsplit = 1 window displayed, like Max layout, but still with
     # multiple stack panes
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
-    Key(
-        [mod, "shift"],
-        "Return",
-        lazy.spawn(f"{terminal} -e bash -c ~/.tmux/scripts/sessionizer.tmux"),
-        desc="Launch terminal",
-    ),
+    Key([mod, "shift"], "Return", lazy.spawn(f"{terminal} -e bash -c ~/.tmux/scripts/sessionizer.tmux"), desc="Launch terminal"),
     # Toggle between different layouts as defined below
     Key([mod], "s", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
-    Key(
-        [mod],
-        "f",
-        lazy.window.toggle_fullscreen(),
-        desc="Toggle fullscreen on the focused window",
-    ),
-    Key(
-        [mod, "shift"],
-        "space",
-        lazy.window.toggle_floating(),
-        desc="Toggle floating on the focused window",
-    ),
+    Key([mod], "f", lazy.window.toggle_fullscreen(), desc="Toggle fullscreen on the focused window"),
+    Key([mod, "shift"], "space", lazy.window.toggle_floating(), desc="Toggle floating on the focused window"),
     Key([mod, "shift"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     # Key([mod], "d", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
-    Key(
-        [mod, "shift"],
-        "d",
-        lazy.spawn("rofi -show run"),
-        desc="Spawn a command using a prompt widget",
-    ),
-    Key(
-        [mod],
-        "d",
-        lazy.spawn("bash -c ~/.config/rofi/wrappers/runner"),
-        desc="Spawn a command using a prompt widget",
-    ),
-    Key(
-        [mod, "shift"],
-        "e",
-        lazy.spawn("bash -c ~/.config/qtile/rofi/rofi-power"),
-        desc="Spawn a command using a prompt widget",
-    ),
-    Key(
-        [],
-        "XF86AudioRaiseVolume",
-        lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ +10%"),
-    ),
-    Key(
-        [],
-        "XF86AudioLowerVolume",
-        lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -10%"),
-    ),
-    Key(
-        [],
-        "XF86AudioMute",
-        lazy.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle"),
-    ),
-    Key(
-        [],
-        "XF86AudioMicMute",
-        lazy.spawn("pactl set-source-mute @DEFAULT_SOURCE@ toggle"),
-    ),
-    Key(
-        [],
-        "XF86MonBrightnessUp",
-        lazy.spawn("brightnessctl set +10%"),
-    ),
-    Key(
-        [],
-        "XF86MonBrightnessDown",
-        lazy.spawn("brightnessctl set 10%-"),
-    ),
-    Key(
-        [alt],
-        "Tab",
-        lazy.group.focus_back(),
-        desc="Alternate between two most recent windows",
-    ),
+    Key([mod, "shift"], "d", lazy.spawn("rofi -show run"), desc="Spawn a command using a prompt widget"),
+    Key([mod], "d", lazy.spawn("bash -c ~/.config/rofi/wrappers/runner"), desc="Spawn a command using a prompt widget"),
+    Key([mod, "shift"], "e", lazy.spawn("bash -c ~/.config/qtile/rofi/rofi-power"), desc="Spawn a command using a prompt widget"),
+    Key([], "XF86AudioRaiseVolume", lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ +10%")),
+    Key([], "XF86AudioLowerVolume", lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -10%")),
+    Key([], "XF86AudioMute", lazy.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle")),
+    Key([], "XF86AudioMicMute", lazy.spawn("pactl set-source-mute @DEFAULT_SOURCE@ toggle")),
+    Key([], "XF86MonBrightnessUp", lazy.spawn("brightnessctl set +10%")),
+    Key([], "XF86MonBrightnessDown", lazy.spawn("brightnessctl set 10%-")),
+    Key([alt], "Tab", lazy.group.focus_back(), desc="Alternate between two most recent windows"),
     Key([mod], "Tab", lazy.screen.toggle_group(), desc="Last active group"),
-    Key(
-        [],
-        "Print",
-        lazy.spawn(
-            "bash -c 'maim -s | xclip -selection clipboard -t image/png && notify-send 'Selection Saved to clipboard''"
-        ),
-    ),
-    Key(
-        [mod],
-        "Print",
-        lazy.spawn("spectacle"),
-    ),
-    Key(
-        [alt, "shift"],
-        "1",
-        lazy.spawn(
-            'bash -c \'setxkbmap us -variant intl && notify-send "Keyboard Layout" "Switched to us -variant intl"\''
-        ),
-    ),
-    Key(
-        [alt, "shift"],
-        "2",
-        lazy.spawn(
-            'bash -c \'setxkbmap us && notify-send "Keyboard Layout" "Switched to us"\''
-        ),
-    ),
+    Key([], "Print", lazy.spawn("bash -c 'maim -s | xclip -selection clipboard -t image/png && notify-send 'Selection Saved to clipboard''")),
+    Key([mod], "Print", lazy.spawn("spectacle")),
+    Key([alt, "shift"], "1", lazy.spawn('bash -c \'setxkbmap us -variant intl && notify-send "Keyboard Layout" "Switched to us -variant intl"\'')),
+    Key([alt, "shift"], "2", lazy.spawn('bash -c \'setxkbmap us && notify-send "Keyboard Layout" "Switched to us"\'')),
 ]
 
 # Add key bindings to switch VTs in Wayland.
@@ -201,41 +104,9 @@ for vt in range(1, 8):
 
 groups = []
 
-group_names = [
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-]
-
-group_labels = [
-    " ",
-    " ",
-    " ",
-    " ",
-    " ",
-    " ",
-    " ",
-    " ",
-    " ",
-]
-
-group_layouts = [
-    "columns",
-    "columns",
-    "treetab",
-    "columns",
-    "columns",
-    "columns",
-    "columns",
-    "columns",
-    "columns",
-]
+group_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+group_labels = [" ", " ", " ", " ", " ", " ", " ", " ", " "]
+group_layouts = ["columns", "columns", "treetab", "columns", "columns", "columns", "columns", "columns", "columns"]
 
 for i in range(len(group_names)):
     groups.append(
@@ -249,24 +120,18 @@ for i in range(len(group_names)):
 for i in groups:
     keys.extend(
         [
-            # mod + group number = switch to group
             Key(
                 [mod],
                 i.name,
                 lazy.group[i.name].toscreen(toggle=True),
                 desc="Switch to group {}".format(i.name),
             ),
-            # mod + shift + group number = switch to & move focused window to group
             Key(
                 [mod, "shift"],
                 i.name,
                 lazy.window.togroup(i.name, switch_group=True),
                 desc="Switch to & move focused window to group {}".format(i.name),
             ),
-            # Or, use below if you prefer not to switch to that group.
-            # # mod + shift + group number = move focused window to group
-            # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
-            #     desc="move focused window to group {}".format(i.name)),
         ]
     )
 
@@ -350,9 +215,7 @@ mouse = [
         lazy.window.set_position_floating(),
         start=lazy.window.get_position(),
     ),
-    Drag(
-        [mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()
-    ),
+    Drag([mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
     Click([mod], "Button2", lazy.window.bring_to_front()),
 ]
 
