@@ -330,7 +330,7 @@ def bars(primary: bool = False):
     bar_margin = 0
 
     if primary:
-        widgets = widgets[0:5] + systray() + widgets[5:]
+        widgets = widgets[0:6] + systray() + widgets[6:]
 
     return bar.Bar(
         widgets,
