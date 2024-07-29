@@ -64,6 +64,23 @@ powerline = {
     ]
 }
 
+systray_powerline = {
+    "decorations": [
+        RectDecoration(
+            colour=nord.gray,
+            radius=3,
+            filled=True,
+            padding_x=0,
+            padding_y=4,
+            group=False,
+            use_widget_background=True,
+            # line_width=10,
+            # extrawidth=50,
+            # clip=True,
+        )
+    ]
+}
+
 # powerline = {
 #     "decorations": [
 #         PowerLineDecoration(
@@ -100,6 +117,8 @@ def group_box():
             highlight_color=[nord.darkest_white, nord.darkest_white],
             background=nord.gray,
             this_current_screen_border=nord.yellow,
+            urgent_alert_method="text",
+            urgent_text=nord.red,
             this_screen_border=nord.glacier,
             other_current_screen_border=nord.glacier,
             other_screen_border=nord.glacier,
@@ -111,7 +130,8 @@ def group_box():
 def window_name():
     return [
         widget.WindowName(
-            fmt="󱂬 {}",
+            fmt="{}",
+            format="󱂬 {state}{name}",
             **FONTCONFIG,
             background=nord.bg,
             # **powerline,
@@ -123,7 +143,8 @@ def systray():
     return [
         widget.Systray(
             background=nord.gray,
-            **powerline,
+            icon_size=20,
+            **systray_powerline,
         ),
     ]
 
@@ -170,6 +191,22 @@ def volume():
     ]
 
 
+def check_updates():
+    return [
+        widget.CheckUpdates(
+            **FONTCONFIG,
+            distro="Arch",
+            colour_no_updates=nord.white,
+            fmt=" {} ",
+            mouse_callbacks={"Button1": utils.update_system},
+            colour_have_updates=nord.orange,
+            background=nord.gray,
+            display_format=" {updates}",
+            **powerline,
+        )
+    ]
+
+
 def battery():
     return [
         widget.Battery(
@@ -180,6 +217,7 @@ def battery():
             discharge_char="󱟞",
             empty="󱟩",
             full_char="󰂅 ",
+            show_short_text=False,
             fmt=" {} ",
             format="{char} {percent:2.0%}",
             **powerline,
@@ -272,8 +310,10 @@ def bars(primary: bool = False):
         *startmenu(),
         text_separator(),
         *group_box(),
-        text_separator(),
         *window_name(),
+        text_separator(),
+        *check_updates(),
+        text_separator(),
         *volume(),
         text_separator(),
         *wlan(),
@@ -289,8 +329,8 @@ def bars(primary: bool = False):
     ]
     bar_margin = 0
 
-    # if primary:
-    #     widgets.insert(3, *systray())
+    if primary:
+        widgets = widgets[0:5] + systray() + widgets[5:]
 
     return bar.Bar(
         widgets,
