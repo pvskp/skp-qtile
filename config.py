@@ -278,6 +278,10 @@ groups.append(
                 "kitty -e ranger",
             ),
             default_dropdown(
+                "TODO",
+                "kitty -e zsh -c 'nvim ~/TODO.md'",
+            ),
+            default_dropdown(
                 "Pavucontrol",
                 "/usr/bin/pavucontrol-qt",
             ),
@@ -291,6 +295,11 @@ keys.extend(
             [mod],
             "m",
             lazy.group["scratchpad"].dropdown_toggle("Ranger"),
+        ),
+        Key(
+            [mod],
+            "n",
+            lazy.group["scratchpad"].dropdown_toggle("TODO"),
         ),
         Key(
             [mod],
