@@ -1,7 +1,7 @@
 from libqtile import layout
 from libqtile.config import Match
 
-BORDER_WIDTH = 3
+BORDER_WIDTH = 2
 
 
 class LayoutColumnsColors:

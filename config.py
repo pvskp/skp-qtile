@@ -1,5 +1,6 @@
 from libqtile import qtile
 from libqtile.config import Click, Drag, Group, Key, Screen, ScratchPad, DropDown
+from libqtile import extension
 from libqtile.lazy import lazy
 from libqtile import hook
 from themes import nord_minimal as theme
@@ -29,6 +30,7 @@ def start_once() -> None:
 mod = "mod4"
 alt = "mod1"
 terminal = globals.TERMINAL
+k9s = "/home/linuxbrew/.linuxbrew/bin/k9s"
 
 keys = [
     # A list of available commands that can be bound to keys can be found
@@ -77,6 +79,19 @@ keys = [
     Key([mod], "Print", lazy.spawn("spectacle")),
     Key([alt, "shift"], "1", lazy.spawn('bash -c \'setxkbmap us -variant intl && notify-send "Keyboard Layout" "Switched to us -variant intl"\'')),
     Key([alt, "shift"], "2", lazy.spawn('bash -c \'setxkbmap us && notify-send "Keyboard Layout" "Switched to us"\'')),
+    Key(
+        [alt, "shift"],
+        "k",
+        lazy.run_extension(
+            extension.CommandSet(
+                commands={
+                    "dev": f"kitty --title 'k9s (dev)' -e bash -c '{k9s} --context dev'",
+                    "prod": f"kitty --title 'k9s (prod)' -e bash -c '{k9s} --context prod'",
+                },
+                **theme.dmenu_theme(prompt="󱃾 select cluster:"),
+            )
+        ),
+    ),
 ]
 
 # Add key bindings to switch VTs in Wayland.

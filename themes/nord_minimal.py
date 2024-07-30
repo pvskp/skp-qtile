@@ -284,6 +284,17 @@ def floating_layout():
     return myly.get_floating({"border_focus": nord.black})
 
 
+def dmenu_theme(prompt: str = ""):
+    return {
+        **FONTCONFIG,
+        "dmenu_bottom": True,
+        "background": nord.bg,
+        "selected_background": nord.purple,
+        "selected_foreground": nord.white,
+        "dmenu_prompt": prompt,
+    }
+
+
 def bars(primary: bool = False):
     widgets = [
         text_separator(),
