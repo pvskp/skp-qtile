@@ -1,1 +1,1 @@
-TERMINAL = "kitty"
+TERMINAL = "kitty --title 'paulov@ideapad:console'"
