@@ -39,19 +39,10 @@ keys = [
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
     Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
     Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
-    # Move windows between left/right columns or move up/down in current stack.
-    # Moving out of range in Columns layout will create new column.
     Key([mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"),
-    Key(
-        [mod, "shift"],
-        "l",
-        lazy.layout.shuffle_right(),
-        desc="Move window to the right",
-    ),
+    Key([mod, "shift"], "l", lazy.layout.shuffle_right(), desc="Move window to the right"),
     Key([mod, "shift"], "j", lazy.layout.shuffle_down(), lazy.layout.move_down().when(layout=["treetab"]), desc="Move window down"),
     Key([mod, "shift"], "k", lazy.layout.shuffle_up(), lazy.layout.move_up().when(layout=["treetab"]), desc="Move window up"),
-    # Grow windows. If current window is on the edge of screen and direction
-    # will be to screen edge - window would shrink.
     Key([mod, "control"], "h", lazy.layout.grow_left(), desc="Grow window to the left"),
     Key([mod, "control"], "l", lazy.layout.grow_right(), desc="Grow window to the right"),
     Key([mod, "control"], "j", lazy.layout.grow_down(), desc="Grow window down"),
@@ -105,7 +96,7 @@ for vt in range(1, 8):
 groups = []
 
 group_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
-group_labels = [" ", " ", " ", " ", " ", " ", " ", " ", " "]
+group_labels = [" ", " ", " ", " ", " ", " ", " ", " ", " "]
 group_layouts = ["columns", "columns", "treetab", "columns", "columns", "columns", "columns", "columns", "columns"]
 
 for i in range(len(group_names)):
@@ -120,18 +111,8 @@ for i in range(len(group_names)):
 for i in groups:
     keys.extend(
         [
-            Key(
-                [mod],
-                i.name,
-                lazy.group[i.name].toscreen(toggle=True),
-                desc="Switch to group {}".format(i.name),
-            ),
-            Key(
-                [mod, "shift"],
-                i.name,
-                lazy.window.togroup(i.name, switch_group=True),
-                desc="Switch to & move focused window to group {}".format(i.name),
-            ),
+            Key([mod], i.name, lazy.group[i.name].toscreen(), desc="Switch to group {}".format(i.name)),
+            Key([mod, "shift"], i.name, lazy.window.togroup(i.name, switch_group=True), desc="Switch to & move focused window to group {}".format(i.name)),
         ]
     )
 
@@ -152,39 +133,18 @@ groups.append(
     ScratchPad(
         "scratchpad",
         [
-            default_dropdown(
-                "Ranger",
-                "kitty -e ranger",
-            ),
-            default_dropdown(
-                "TODO",
-                "kitty -e zsh -c 'nvim ~/TODO.md'",
-            ),
-            default_dropdown(
-                "Pavucontrol",
-                "/usr/bin/pavucontrol-qt",
-            ),
+            default_dropdown("Ranger", "kitty -e ranger"),
+            default_dropdown("TODO", "kitty -e zsh -c 'nvim ~/TODO.md'"),
+            default_dropdown("Pavucontrol", "/usr/bin/pavucontrol-qt"),
         ],
     )
 )
 
 keys.extend(
     [
-        Key(
-            [mod],
-            "m",
-            lazy.group["scratchpad"].dropdown_toggle("Ranger"),
-        ),
-        Key(
-            [mod],
-            "n",
-            lazy.group["scratchpad"].dropdown_toggle("TODO"),
-        ),
-        Key(
-            [mod],
-            "p",
-            lazy.group["scratchpad"].dropdown_toggle("Pavucontrol"),
-        ),
+        Key([mod], "m", lazy.group["scratchpad"].dropdown_toggle("Ranger")),
+        Key([mod], "n", lazy.group["scratchpad"].dropdown_toggle("TODO")),
+        Key([mod], "p", lazy.group["scratchpad"].dropdown_toggle("Pavucontrol")),
     ]
 )
 
@@ -199,22 +159,13 @@ extension_defaults = widget_defaults.copy()
 
 
 screens = [
-    Screen(
-        top=theme.bars(primary=True),
-    ),
-    Screen(
-        top=theme.bars(primary=False),
-    ),
+    Screen(top=theme.bars(primary=True)),
+    Screen(top=theme.bars(primary=False)),
 ]
 
 # Drag floating layouts.
 mouse = [
-    Drag(
-        [mod],
-        "Button1",
-        lazy.window.set_position_floating(),
-        start=lazy.window.get_position(),
-    ),
+    Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
     Drag([mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
     Click([mod], "Button2", lazy.window.bring_to_front()),
 ]

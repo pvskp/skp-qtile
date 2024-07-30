@@ -246,11 +246,7 @@ def startmenu():
             text="   ",
             foreground=nord.green,
             background=nord.gray,
-            mouse_callbacks={
-                "Button1": lambda: qtile.cmd_spawn(
-                    "bash -c ~/.config/rofi/wrappers/runner"
-                )
-            },
+            mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("bash -c ~/.config/rofi/wrappers/runner")},
             **powerline,
         ),
     ]
@@ -262,11 +258,7 @@ def powermenu():
             text=" 󰐦 ",
             **FONTCONFIG,
             background=nord.red,
-            mouse_callbacks={
-                "Button1": lambda: qtile.cmd_spawn(
-                    "bash -c ~/.config/qtile/rofi/rofi-power"
-                )
-            },
+            mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("bash -c ~/.config/qtile/rofi/rofi-power")},
             **powerline,
         ),
     ]
@@ -274,9 +266,7 @@ def powermenu():
 
 def layouts():
     return myly.get_layout(
-        columns_colors=myly.LayoutColumnsColors(
-            border_focus=[nord.black], border_focus_stack=[nord.blue]
-        ),
+        columns_colors=myly.LayoutColumnsColors(border_focus=[nord.black], border_focus_stack=[nord.blue]),
         treetab_colors=myly.LayoutTreeTabColors(
             section_fg=nord.purple,
             inactive_bg=nord.gray,
@@ -284,21 +274,6 @@ def layouts():
             bg_color=nord.darker,
         ),
     )
-
-
-# def layouts():
-#     return myly.get_layout(
-#         columns_colors={
-#             "border_focus": [nord.black],
-#             "border_focus_stack": [nord.blue],
-#         },
-#         treetab_colors={
-#             "section_fg": nord.purple,
-#             "inactive_fg": nord.gray,
-#             "active_bg": nord.glacier,
-#             "bg_color": nord.black,
-#         },
-#     )
 
 
 def floating_layout():
