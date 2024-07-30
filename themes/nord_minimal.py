@@ -214,8 +214,8 @@ def battery():
             **FONTCONFIG,
             foreground=nord.white,
             background=nord.gray,
-            charge_char="󱟠",
-            discharge_char="󱟞",
+            charge_char=" 󰁹",
+            discharge_char=" 󰁹",
             empty="󱟩",
             full_char="󰂅 ",
             show_short_text=False,
@@ -266,7 +266,11 @@ def powermenu():
 
 def layouts():
     return myly.get_layout(
-        columns_colors=myly.LayoutColumnsColors(border_focus=[nord.black], border_focus_stack=[nord.blue]),
+        columns_colors=myly.LayoutColumnsColors(
+            border_focus=[nord.purple],
+            border_focus_stack=[nord.blue],
+            border_normal=[nord.gray],
+        ),
         treetab_colors=myly.LayoutTreeTabColors(
             section_fg=nord.purple,
             inactive_bg=nord.gray,

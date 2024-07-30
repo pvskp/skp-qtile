@@ -1,7 +1,7 @@
-from libqtile import init, layout
+from libqtile import layout
 from libqtile.config import Match
 
-BORDER_WIDTH = 2
+BORDER_WIDTH = 3
 
 
 class LayoutColumnsColors:
@@ -12,9 +12,11 @@ class LayoutColumnsColors:
         self,
         border_focus: list[str],
         border_focus_stack: list[str],
+        border_normal: list[str],
     ) -> None:
         self.border_focus: list[str] = border_focus
         self.border_focus_stack: list[str] = border_focus_stack
+        self.border_normal = border_normal
 
 
 class LayoutTreeTabColors:
