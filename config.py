@@ -1,4 +1,3 @@
-from functools import partialmethod
 from libqtile import qtile
 from libqtile.config import Click, Drag, Group, Key, Screen, ScratchPad, DropDown
 from libqtile import extension
