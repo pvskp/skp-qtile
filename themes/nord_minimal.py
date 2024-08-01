@@ -44,6 +44,8 @@ distros = {
     },
 }
 
+current_distro = distros[distro.name().lower()]
+
 FONT = "SpaceMono Nerd Font"
 
 FONTCONFIG = {
@@ -130,7 +132,7 @@ def group_box():
             highlight_method="text",
             highlight_color=[nord.darkest_white, nord.darkest_white],
             background=nord.gray,
-            this_current_screen_border=nord.yellow,
+            this_current_screen_border=current_distro["color"],
             urgent_alert_method="text",
             urgent_text=nord.red,
             this_screen_border=nord.glacier,
@@ -257,8 +259,8 @@ def startmenu():
         widget.TextBox(
             font=FONT,
             fontsize=20,
-            text=f" {distros[distro.name().lower()]['icon']} ",
-            foreground=distros[distro.name().lower()]["color"],
+            text=f" {current_distro['icon']} ",
+            foreground=current_distro["color"],
             background=nord.gray,
             mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("bash -c ~/.config/rofi/wrappers/runner")},
             **powerline,
@@ -281,7 +283,7 @@ def powermenu():
 def layouts():
     return myly.get_layout(
         columns_colors=myly.LayoutColumnsColors(
-            border_focus=[nord.purple],
+            border_focus=[current_distro["color"]],
             border_focus_stack=[nord.blue],
             border_normal=[nord.gray],
         ),
