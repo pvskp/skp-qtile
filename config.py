@@ -6,28 +6,23 @@ from screeninfo import get_monitors
 from libqtile.lazy import lazy
 from libqtile import hook
 from themes import nord_minimal as theme
-import os
 import globals
 import utils
 
 
-def execute_in_background(cmd: str):
-    os.system(f"{cmd} &")
-
-
-execute_in_background("nitrogen --restore")
-execute_in_background("xhost +si:localuser:$USER")
+utils.execute_in_background("nitrogen --restore")
+utils.execute_in_background("xhost +si:localuser:$USER")
 
 BORDER_WIDTH = 2
 
 
 @hook.subscribe.startup_once
 def start_once() -> None:
-    execute_in_background("picom")
-    execute_in_background("xset b off")
-    execute_in_background("xset b 0 0 0")
-    execute_in_background("barrier")
-    execute_in_background("/usr/lib/polkit-kde-authentication-agent-1")
+    utils.execute_in_background("picom")
+    utils.execute_in_background("xset b off")
+    utils.execute_in_background("xset b 0 0 0")
+    utils.execute_in_background("barrier")
+    utils.execute_in_background("/usr/lib/polkit-kde-authentication-agent-1")
 
 
 mod = "mod4"

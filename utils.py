@@ -1,6 +1,6 @@
 import psutil
+import os
 import globals
-from libqtile.lazy import lazy
 from libqtile import qtile
 
 
@@ -23,6 +23,10 @@ def update_system() -> None:
 
 def open_nmtui() -> None:
     qtile.cmd_spawn(f"{globals.TERMINAL} -e nmtui")
+
+
+def execute_in_background(cmd: str):
+    os.system(f"{cmd} &")
 
 
 def go_to_group(name: str):
