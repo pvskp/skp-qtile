@@ -2,6 +2,7 @@ from libqtile import bar, qtile
 from qtile_extras import widget
 from qtile_extras.widget.decorations import PowerLineDecoration, RectDecoration
 import utils
+import distro
 from layouts import default as myly
 
 
@@ -31,6 +32,17 @@ class Nord:
 
 
 nord = Nord
+
+distros = {
+    "manjaro": {
+        "icon": " ",
+        "color": nord.green,
+    },
+    "ubuntu": {
+        "icon": " ",
+        "color": nord.orange,
+    },
+}
 
 FONT = "SpaceMono Nerd Font"
 
@@ -111,7 +123,8 @@ def text_separator(separator_size: int = 1, fg: str = nord.bg, bg: str = nord.bg
 def group_box():
     return [
         widget.GroupBox(
-            **FONTCONFIG,
+            font=FONT,
+            fontsize=20,
             active=nord.white,
             inactive=nord.light_gray_bright,
             highlight_method="text",
@@ -242,9 +255,10 @@ def clock():
 def startmenu():
     return [
         widget.TextBox(
-            **FONTCONFIG,
-            text="   ",
-            foreground=nord.green,
+            font=FONT,
+            fontsize=20,
+            text=f" {distros[distro.name().lower()]['icon']} ",
+            foreground=distros[distro.name().lower()]["color"],
             background=nord.gray,
             mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("bash -c ~/.config/rofi/wrappers/runner")},
             **powerline,
