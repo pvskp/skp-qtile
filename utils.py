@@ -23,3 +23,19 @@ def update_system() -> None:
 
 def open_nmtui() -> None:
     qtile.cmd_spawn(f"{globals.TERMINAL} -e nmtui")
+
+
+def go_to_group(name: str):
+    def _inner(qtile):
+        if len(qtile.screens) == 1:
+            qtile.groups_map[name].toscreen()
+            return
+
+        if name in "9":
+            qtile.focus_screen(1)
+            qtile.groups_map[name].toscreen()
+        else:
+            qtile.focus_screen(0)
+            qtile.groups_map[name].toscreen()
+
+    return _inner

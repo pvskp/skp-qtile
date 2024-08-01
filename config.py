@@ -1,11 +1,14 @@
+from functools import partialmethod
 from libqtile import qtile
 from libqtile.config import Click, Drag, Group, Key, Screen, ScratchPad, DropDown
 from libqtile import extension
+from screeninfo import get_monitors
 from libqtile.lazy import lazy
 from libqtile import hook
 from themes import nord_minimal as theme
 import os
 import globals
+import utils
 
 
 def execute_in_background(cmd: str):
@@ -126,7 +129,7 @@ for i in range(len(group_names)):
 for i in groups:
     keys.extend(
         [
-            Key([mod], i.name, lazy.group[i.name].toscreen(), desc="Switch to group {}".format(i.name)),
+            Key([mod], i.name, lazy.function(utils.go_to_group(i.name)), desc="Switch to group {}".format(i.name)),
             Key([mod, "shift"], i.name, lazy.window.togroup(i.name, switch_group=True), desc="Switch to & move focused window to group {}".format(i.name)),
         ]
     )
@@ -167,16 +170,16 @@ layouts = theme.layouts()
 
 widget_defaults = dict(
     font="CaskaydiaCove Nerd Font",
-    # fontsize=18,
+    fontsize=18,
     padding=3,
 )
 extension_defaults = widget_defaults.copy()
 
+screens = []
+for mon in get_monitors():
+    if isinstance(mon.is_primary, bool):
+        screens.append(Screen(top=theme.bars(primary=not mon.is_primary)))  # don't know yet why I need to negate this
 
-screens = [
-    Screen(top=theme.bars(primary=True)),
-    Screen(top=theme.bars(primary=False)),
-]
 
 # Drag floating layouts.
 mouse = [
