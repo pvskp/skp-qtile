@@ -34,19 +34,22 @@ class Nord:
 nord = Nord
 
 distros = {
-    "manjaro": {
+    "manjaro linux": {
         "icon": " ",
         "color": nord.green,
+        "accent": nord.teal,
     },
     "ubuntu": {
         "icon": " ",
         "color": nord.orange,
+        "accent": nord.orange,
     },
 }
 
 current_distro = distros[distro.name().lower()]
 
-FONT = "SpaceMono Nerd Font"
+FONT_MONO = "SpaceMono Nerd Font"
+FONT = "Roboto"
 
 FONTCONFIG = {
     "font": FONT,
@@ -125,14 +128,14 @@ def text_separator(separator_size: int = 1, fg: str = nord.bg, bg: str = nord.bg
 def group_box():
     return [
         widget.GroupBox(
-            font=FONT,
+            font=FONT_MONO,
             fontsize=20,
             active=nord.white,
             inactive=nord.light_gray_bright,
             highlight_method="text",
             highlight_color=[nord.darkest_white, nord.darkest_white],
             background=nord.gray,
-            this_current_screen_border=current_distro["color"],
+            this_current_screen_border=current_distro["accent"],
             urgent_alert_method="text",
             urgent_text=nord.red,
             this_screen_border=nord.glacier,
@@ -169,7 +172,7 @@ def memory():
     return [
         widget.Memory(
             **FONTCONFIG,
-            fmt=" 󰍛 {} ",
+            fmt=" 󰍛   {}  ",
             foreground=nord.white,
             format="{MemUsed:.0f}{mm}/{MemTotal:.0f}{mm}",
             measure_mem="G",
@@ -184,7 +187,7 @@ def wlan():
     return [
         widget.Wlan(
             **FONTCONFIG,
-            fmt=" 󰖩  {} ",
+            fmt=" 󰖩    {} ",
             interface=utils.get_current_wireless_interface(),
             format="{essid}",
             foreground=nord.white,
@@ -199,7 +202,7 @@ def volume():
     return [
         widget.Volume(
             **FONTCONFIG,
-            fmt="   {} ",
+            fmt="     {} ",
             foreground=nord.white,
             background=nord.gray,
             **powerline,
@@ -229,10 +232,10 @@ def battery():
             **FONTCONFIG,
             foreground=nord.white,
             background=nord.gray,
-            charge_char=" 󰁹",
-            discharge_char=" 󰁹",
+            charge_char=" 󰁹 ",
+            discharge_char=" 󰁹 ",
             empty="󱟩",
-            full_char="󰂅 ",
+            full_char="󰂅  ",
             show_short_text=False,
             fmt=" {} ",
             format="{char} {percent:2.0%}",
@@ -245,7 +248,7 @@ def clock():
     return [
         widget.Clock(
             **FONTCONFIG,
-            fmt=" 󰥔 {} ",
+            fmt=" 󰥔   {} ",
             format="%H:%M",
             foreground=nord.white,
             background=nord.gray,
@@ -272,7 +275,8 @@ def powermenu():
     return [
         widget.TextBox(
             text=" 󰐦 ",
-            **FONTCONFIG,
+            font=FONT_MONO,
+            fontsize=17,
             background=nord.red,
             mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("bash -c ~/.config/qtile/rofi/rofi-power")},
             **powerline,
@@ -283,7 +287,7 @@ def powermenu():
 def layouts():
     return myly.get_layout(
         columns_colors=myly.LayoutColumnsColors(
-            border_focus=[current_distro["color"]],
+            border_focus=[current_distro["accent"]],
             border_focus_stack=[nord.blue],
             border_normal=[nord.gray],
         ),
@@ -305,7 +309,7 @@ def dmenu_theme(prompt: str = ""):
         **FONTCONFIG,
         "dmenu_bottom": True,
         "background": nord.bg,
-        "selected_background": nord.purple,
+        "selected_background": nord.blue,
         "selected_foreground": nord.white,
         "dmenu_prompt": prompt,
     }
