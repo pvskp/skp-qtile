@@ -109,7 +109,7 @@ groups = []
 
 group_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 group_labels = ["󰈹 ", " ", " ", " ", " ", " ", " ", "󱃾 ", " "]
-group_layouts = ["treetab", "columns", "treetab", "columns", "columns", "columns", "columns", "columns", "columns"]
+group_layouts = ["columns", "columns", "treetab", "columns", "columns", "columns", "columns", "columns", "columns"]
 
 for i in range(len(group_names)):
     groups.append(
