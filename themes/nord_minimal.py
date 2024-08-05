@@ -49,7 +49,7 @@ distros = {
 current_distro = distros[distro.name().lower()]
 
 FONT_MONO = "SpaceMono Nerd Font"
-FONT = "Roboto"
+FONT = "SF Pro"
 
 FONTCONFIG = {
     "font": FONT,
@@ -150,7 +150,7 @@ def window_name():
     return [
         widget.WindowName(
             fmt="{}",
-            format="󱂬 {state}{name}",
+            format="󱂬  {state}{name}",
             **FONTCONFIG,
             background=nord.bg,
             # **powerline,
