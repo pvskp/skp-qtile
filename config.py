@@ -1,4 +1,4 @@
-from libqtile import qtile
+from libqtile import qtile, bar
 from libqtile.config import Click, Drag, Group, Key, Screen, ScratchPad, DropDown
 from libqtile import extension
 from screeninfo import get_monitors
@@ -82,8 +82,8 @@ keys = [
         lazy.run_extension(
             extension.CommandSet(
                 commands={
-                    "dev": f"kitty --title 'k9s (dev)' -e bash -c '{k9s} --context dev'",
-                    "prod": f"kitty --title 'k9s (prod)' -e bash -c '{k9s} --context prod'",
+                    "dev": f"kitty --title 'k9s (dev)' -e bash -c 'EDITOR=nvim {k9s} --context dev'",
+                    "prod": f"kitty --title 'k9s (prod)' -e bash -c 'EDITOR=nvim {k9s} --context prod'",
                 },
                 **theme.dmenu_theme(prompt="󱃾 select cluster:"),
             )
