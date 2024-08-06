@@ -48,8 +48,8 @@ distros = {
 
 current_distro = distros[distro.name().lower()]
 
-FONT_MONO = "SpaceMono Nerd Font"
-FONT = "SF Pro"
+FONT_MONO = "JetBrainsMono Nerd Font"
+FONT = "JetBrainsMono Nerd Font"
 
 FONTCONFIG = {
     "font": FONT,
@@ -150,7 +150,7 @@ def window_name():
     return [
         widget.WindowName(
             fmt="{}",
-            format="󱂬  {state}{name}",
+            format="󱂬 {state}{name}",
             **FONTCONFIG,
             background=nord.bg,
             # **powerline,
@@ -172,7 +172,7 @@ def memory():
     return [
         widget.Memory(
             **FONTCONFIG,
-            fmt=" 󰍛   {}  ",
+            fmt=" 󰍛 {}  ",
             foreground=nord.white,
             format="{MemUsed:.0f}{mm}/{MemTotal:.0f}{mm}",
             measure_mem="G",
@@ -187,7 +187,7 @@ def wlan():
     return [
         widget.Wlan(
             **FONTCONFIG,
-            fmt=" 󰖩    {} ",
+            fmt=" 󰖩 {} ",
             interface=utils.get_current_wireless_interface(),
             format="{essid}",
             foreground=nord.white,
@@ -202,7 +202,7 @@ def volume():
     return [
         widget.Volume(
             **FONTCONFIG,
-            fmt="     {} ",
+            fmt="   {} ",
             foreground=nord.white,
             background=nord.gray,
             **powerline,
@@ -232,10 +232,10 @@ def battery():
             **FONTCONFIG,
             foreground=nord.white,
             background=nord.gray,
-            charge_char=" 󰁹 ",
-            discharge_char=" 󰁹 ",
+            charge_char=" 󰁹",
+            discharge_char=" 󰁹",
             empty="󱟩",
-            full_char="󰂅  ",
+            full_char="󰂅",
             show_short_text=False,
             fmt=" {} ",
             format="{char} {percent:2.0%}",
@@ -248,7 +248,7 @@ def clock():
     return [
         widget.Clock(
             **FONTCONFIG,
-            fmt=" 󰥔   {} ",
+            fmt=" 󰥔 {} ",
             format="%H:%M",
             foreground=nord.white,
             background=nord.gray,
