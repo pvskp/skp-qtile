@@ -12,14 +12,13 @@ import utils
 utils.execute_in_background("nitrogen --restore")
 utils.execute_in_background("xhost +si:localuser:$USER")
 
-BORDER_WIDTH = 2
-
 
 @hook.subscribe.startup_once
 def start_once() -> None:
     utils.execute_in_background("picom")
     utils.execute_in_background("xset b off")
     utils.execute_in_background("xset b 0 0 0")
+    utils.execute_in_background("dunst")
     utils.execute_in_background("barrier")
     utils.execute_in_background("/usr/lib/polkit-kde-authentication-agent-1")
 
