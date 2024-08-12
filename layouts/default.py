@@ -1,5 +1,6 @@
 from libqtile import layout
 from libqtile.config import Match
+from libqtile import hook
 
 BORDER_WIDTH = 2
 
@@ -48,13 +49,22 @@ def get_floating(floating_config={"border_focus": "#000000"}):
             Match(wm_class="confirmreset"),  # gitk
             Match(wm_class="makebranch"),  # gitk
             Match(wm_class="maketag"),  # gitk
+            Match(wm_class="Webapp-manager.py"),
             Match(wm_class="Gpick"),
             Match(wm_class="spectacle"),
+            Match(wm_class="gnome-calendar"),
             Match(wm_class="ssh-askpass"),  # ssh-askpass
             Match(title="branchdialog"),  # gitk
             Match(title="pinentry"),  # GPG key password entry
         ],
     )
+
+
+@hook.subscribe.client_new
+def set_floating_and_size(window):
+    if window.match(Match(wm_class="gnome-calendar")):
+        window.floating = True
+        window.cmd_set_size_floating(1200, 600)  # Largura e altura desejadas
 
 
 def get_layout(

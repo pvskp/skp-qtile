@@ -5,7 +5,7 @@ from screeninfo import get_monitors
 from libqtile.lazy import lazy
 from libqtile import hook
 from themes import nord_minimal as theme
-import globals
+from globals import TERMINAL, SHELL
 import utils
 
 
@@ -19,14 +19,14 @@ def start_once() -> None:
     utils.execute_in_background("xset b off")
     utils.execute_in_background("xset b 0 0 0")
     utils.execute_in_background("dunst")
+    utils.execute_in_background("bash -c '~/.nix-profile/bin/flameshot'")
     utils.execute_in_background("barrier")
     utils.execute_in_background("/usr/lib/polkit-kde-authentication-agent-1")
 
 
 mod = "mod4"
 alt = "mod1"
-terminal = globals.TERMINAL
-k9s = "/home/linuxbrew/.linuxbrew/bin/k9s"
+terminal = TERMINAL
 
 keys = [
     # A list of available commands that can be bound to keys can be found
@@ -51,7 +51,7 @@ keys = [
     # Unsplit = 1 window displayed, like Max layout, but still with
     # multiple stack panes
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
-    Key([mod, "shift"], "Return", lazy.spawn(f"{terminal} -e bash -c ~/.tmux/scripts/sessionizer.tmux"), desc="Launch terminal"),
+    Key([mod, "shift"], "Return", lazy.spawn(f"{terminal} -e bash -i -c ~/.tmux/scripts/sessionizer.tmux"), desc="Launch terminal"),
     # Toggle between different layouts as defined below
     Key([mod], "s", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
@@ -71,7 +71,8 @@ keys = [
     Key([], "XF86MonBrightnessDown", lazy.spawn("brightnessctl set 10%-")),
     Key([alt], "Tab", lazy.group.focus_back(), desc="Alternate between two most recent windows"),
     Key([mod], "Tab", lazy.screen.toggle_group(), desc="Last active group"),
-    Key([], "Print", lazy.spawn("bash -c 'maim -s | xclip -selection clipboard -t image/png && notify-send 'Selection Saved to clipboard''")),
+    # Key([], "Print", lazy.spawn("bash -c 'maim -s | xclip -selection clipboard -t image/png && notify-send 'Selection Saved to clipboard''")),
+    Key([], "Print", lazy.spawn("bash -c '~/.nix-profile/bin/flameshot gui'")),
     Key([mod], "Print", lazy.spawn("spectacle")),
     Key([alt, "shift"], "1", lazy.spawn('bash -c \'setxkbmap us -variant intl && notify-send "Keyboard Layout" "Switched to us -variant intl"\'')),
     Key([alt, "shift"], "2", lazy.spawn('bash -c \'setxkbmap us && notify-send "Keyboard Layout" "Switched to us"\'')),
@@ -81,8 +82,8 @@ keys = [
         lazy.run_extension(
             extension.CommandSet(
                 commands={
-                    "dev": f"kitty --title 'k9s (dev)' -e bash -c 'EDITOR=nvim {k9s} --context dev'",
-                    "prod": f"kitty --title 'k9s (prod)' -e bash -c 'EDITOR=nvim {k9s} --context prod'",
+                    "dev": f"kitty --title 'k9s (dev)' -e {SHELL} 'EDITOR=nvim k9s --context dev'",
+                    "prod": f"kitty --title 'k9s (prod)' -e {SHELL} 'EDITOR=nvim k9s --context prod'",
                 },
                 **theme.dmenu_theme(prompt="󱃾 select cluster:"),
             )
@@ -107,7 +108,7 @@ for vt in range(1, 8):
 groups = []
 
 group_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
-group_labels = ["󰈹 ", " ", " ", " ", " ", " ", " ", "󱃾 ", " "]
+group_labels = [" ", " ", " ", " ", " ", " ", " ", "󱃾 ", " "]
 group_layouts = ["columns", "columns", "treetab", "columns", "columns", "columns", "columns", "columns", "columns"]
 
 for i in range(len(group_names)):

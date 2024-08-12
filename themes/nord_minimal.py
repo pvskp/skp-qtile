@@ -1,6 +1,7 @@
 from libqtile import bar, qtile
 from qtile_extras import widget
 from qtile_extras.widget.decorations import PowerLineDecoration, RectDecoration
+from globals import TERMINAL
 import utils
 import distro
 from layouts import default as myly
@@ -49,7 +50,7 @@ distros = {
 current_distro = distros[distro.name().lower()]
 
 FONT_MONO = "JetBrainsMono Nerd Font"
-FONT = "JetBrainsMono Nerd Font"
+FONT = "Arimo Nerd Font"
 
 FONTCONFIG = {
     "font": FONT,
@@ -150,9 +151,11 @@ def window_name():
     return [
         widget.WindowName(
             fmt="{}",
-            format="󱂬 {state}{name}",
+            # format=" {state}{name}",
+            format="",
             **FONTCONFIG,
-            background=nord.bg,
+            max_chars=40,
+            # background=nord.gray,
             # **powerline,
         )
     ]
@@ -172,7 +175,7 @@ def memory():
     return [
         widget.Memory(
             **FONTCONFIG,
-            fmt=" 󰍛 {}  ",
+            fmt=" 󰍛 {} ",
             foreground=nord.white,
             format="{MemUsed:.0f}{mm}/{MemTotal:.0f}{mm}",
             measure_mem="G",
@@ -202,7 +205,9 @@ def volume():
     return [
         widget.Volume(
             **FONTCONFIG,
-            fmt="   {} ",
+            fmt=" {} ",
+            mute_format="       ",
+            unmute_format="  {volume}%",
             foreground=nord.white,
             background=nord.gray,
             **powerline,
@@ -214,8 +219,9 @@ def check_updates():
     return [
         widget.CheckUpdates(
             **FONTCONFIG,
-            distro="Arch",
+            distro="Arch_Sup",
             colour_no_updates=nord.white,
+            update_interval=600,
             fmt=" {} ",
             mouse_callbacks={"Button1": utils.update_system},
             colour_have_updates=nord.orange,
@@ -234,6 +240,7 @@ def battery():
             background=nord.gray,
             charge_char=" 󰁹",
             discharge_char=" 󰁹",
+            not_charging_char="󰁹",
             empty="󱟩",
             full_char="󰂅",
             show_short_text=False,
@@ -257,15 +264,81 @@ def clock():
     ]
 
 
+def date():
+    return [
+        widget.Clock(
+            font="Roboto",
+            fontsize=16,
+            fmt=" {} ",
+            format="%d de %b de %Y",
+            foreground=nord.white,
+            background=nord.bg,
+            mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("gnome-calendar")},
+            **powerline,
+        ),
+    ]
+
+
+def spacer():
+    return [
+        widget.Spacer(),
+    ]
+
+
+def application_shortcuts():
+    return [
+        widget.TextBox(
+            font=FONT,
+            fontsize=20,
+            text=" ",
+            foreground=nord.orange,
+            background=nord.bg,
+            mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("firefox")},
+            # **powerline,
+        ),
+        widget.TextBox(
+            font=FONT,
+            fontsize=20,
+            text=" ",
+            foreground=nord.blue,
+            background=nord.bg,
+            mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("thunderbird")},
+            # **powerline,
+        ),
+        widget.TextBox(
+            font=FONT,
+            fontsize=20,
+            text="󰌽 ",
+            foreground=nord.green,
+            background=nord.bg,
+            mouse_callbacks={"Button1": lambda: qtile.cmd_spawn(TERMINAL)},
+            # **powerline,
+        ),
+    ]
+    ...
+
+
 def startmenu():
     return [
         widget.TextBox(
             font=FONT,
             fontsize=20,
-            text=f" {current_distro['icon']} ",
+            text=f"{current_distro['icon']}",
             foreground=current_distro["color"],
-            background=nord.gray,
+            # background=nord.gray,
             mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("bash -c ~/.config/rofi/wrappers/runner")},
+            # **powerline,
+        ),
+    ]
+
+
+def bluetooth():
+    return [
+        widget.Bluetooth(
+            default_text="  {connected_devices} ",
+            background=nord.gray,
+            default_show_battery=True,
+            mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("blueman-manager")},
             **powerline,
         ),
     ]
@@ -322,9 +395,17 @@ def bars(primary: bool = False):
         text_separator(),
         *group_box(),
         text_separator(),
-        *window_name(),
+        *application_shortcuts(),
+        text_separator(),
+        *spacer(),
+        *date(),
+        *spacer(),
         text_separator(),
         *check_updates(),
+        text_separator(),
+        *systray(),
+        # text_separator(),
+        # *bluetooth(),
         text_separator(),
         *volume(),
         text_separator(),
@@ -341,15 +422,15 @@ def bars(primary: bool = False):
     ]
     bar_margin = 0
 
-    if primary:
-        systray_pos = 7
-        widgets = widgets[0:systray_pos] + systray() + widgets[systray_pos:]
+    # if primary:
+    #     systray_pos = 9
+    #     widgets = widgets[0:systray_pos] + systray() + widgets[systray_pos:]
 
     return bar.Bar(
         widgets,
-        35,
+        32,
         margin=bar_margin,
-        border_width=[0, 0, 0, 0],
-        border_color=nord.black,
+        border_width=[3, 3, 3, 3],
+        border_color=nord.dark_gray,
         background=nord.bg,
     )
