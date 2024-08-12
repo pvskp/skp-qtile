@@ -1,7 +1,7 @@
 from libqtile import bar, qtile
 from qtile_extras import widget
 from qtile_extras.widget.decorations import PowerLineDecoration, RectDecoration
-from globals import TERMINAL
+from globals import CALCURSE, TERMINAL, SHELL
 import utils
 import distro
 from layouts import default as myly
@@ -273,7 +273,7 @@ def date():
             format="%d de %b de %Y",
             foreground=nord.white,
             background=nord.bg,
-            mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("gnome-calendar")},
+            mouse_callbacks={"Button1": lambda: qtile.cmd_spawn(CALCURSE)},
             **powerline,
         ),
     ]

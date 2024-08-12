@@ -52,7 +52,7 @@ def get_floating(floating_config={"border_focus": "#000000"}):
             Match(wm_class="Webapp-manager.py"),
             Match(wm_class="Gpick"),
             Match(wm_class="spectacle"),
-            Match(wm_class="gnome-calendar"),
+            Match(wm_class="calcurse"),
             Match(wm_class="ssh-askpass"),  # ssh-askpass
             Match(title="branchdialog"),  # gitk
             Match(title="pinentry"),  # GPG key password entry
@@ -62,7 +62,7 @@ def get_floating(floating_config={"border_focus": "#000000"}):
 
 @hook.subscribe.client_new
 def set_floating_and_size(window):
-    if window.match(Match(wm_class="gnome-calendar")):
+    if window.match(Match(wm_class="calcurse")):
         window.floating = True
         window.cmd_set_size_floating(1200, 600)  # Largura e altura desejadas
 
