@@ -374,7 +374,7 @@ def layouts():
 
 
 def floating_layout():
-    return myly.get_floating({"border_focus": nord.black})
+    return myly.get_floating({"border_focus": current_distro["accent"], "border_normal": nord.bg})
 
 
 def dmenu_theme(prompt: str = ""):
