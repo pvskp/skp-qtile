@@ -53,6 +53,7 @@ def get_floating(floating_config={"border_focus": "#000000", "border_normal": "#
             Match(wm_class="Gpick"),
             Match(wm_class="spectacle"),
             Match(wm_class="calcurse"),
+            Match(wm_class="Blueman-manager"),
             Match(wm_class="Lutris"),
             Match(wm_class="ssh-askpass"),  # ssh-askpass
             Match(title="branchdialog"),  # gitk
