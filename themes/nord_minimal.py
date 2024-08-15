@@ -357,6 +357,20 @@ def powermenu():
     ]
 
 
+def backlight():
+    return [
+        widget.Backlight(
+            font=FONT,
+            fmt=" 󰃞 {} ",
+            backlight_name="amdgpu_bl1",
+            change_command="brightnessctl set {0}%",
+            min_brightness=5,
+            background=nord.gray,
+            **powerline,
+        )
+    ]
+
+
 def layouts():
     return myly.get_layout(
         columns_colors=myly.LayoutColumnsColors(
@@ -412,6 +426,8 @@ def bars(primary: bool = False):
         *wlan(),
         text_separator(),
         *memory(),
+        text_separator(),
+        *backlight(),
         text_separator(),
         *battery(),
         text_separator(),
