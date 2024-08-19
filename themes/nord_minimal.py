@@ -39,11 +39,13 @@ distros = {
         "icon": " ",
         "color": nord.green,
         "accent": nord.teal,
+        "backlight_name": "amdgpu_bl1",
     },
     "ubuntu": {
         "icon": " ",
         "color": nord.orange,
         "accent": nord.orange,
+        "backlight_name": "intel_backlight",
     },
 }
 
@@ -372,7 +374,7 @@ def backlight():
         widget.Backlight(
             font=FONT,
             fmt=" 󰃞 {} ",
-            backlight_name="amdgpu_bl1",
+            backlight_name=current_distro["backlight_name"],
             change_command="brightnessctl set {0}%",
             min_brightness=5,
             background=nord.gray,
