@@ -148,7 +148,7 @@ groups.append(
         [
             default_dropdown("Ranger", "kitty -e ranger"),
             default_dropdown("TODO", "kitty -e zsh -c 'nvim ~/TODO.md'"),
-            default_dropdown("Pavucontrol", "/usr/bin/pavucontrol-qt"),
+            default_dropdown("Pavucontrol", "/usr/bin/pavucontrol"),
         ],
     )
 )
