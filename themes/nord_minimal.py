@@ -1,7 +1,7 @@
 from libqtile import bar, qtile
 from qtile_extras import widget
 from qtile_extras.widget.decorations import PowerLineDecoration, RectDecoration
-from globals import CALCURSE, TERMINAL, SHELL
+from globals import CALCURSE, TERMINAL
 import utils
 import distro
 from layouts import default as myly

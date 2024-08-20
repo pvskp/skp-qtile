@@ -74,7 +74,7 @@ def get_layout(
     treetab_colors: LayoutTreeTabColors,
 ):
     return [
-        layout.Columns(
+        layout.Plasma(
             **vars(columns_colors),
             border_width=BORDER_WIDTH,
             margin=5,
