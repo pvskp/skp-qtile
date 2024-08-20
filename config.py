@@ -25,6 +25,7 @@ def start_once() -> None:
     utils.execute_in_background("bash -c '~/.nix-profile/bin/flameshot'")
     utils.execute_in_background("barrier")
     utils.execute_in_background("/usr/lib/polkit-kde-authentication-agent-1")
+    utils.execute_in_background("watch -- autorandr --change")
 
 
 mod = "mod4"
