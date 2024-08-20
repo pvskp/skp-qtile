@@ -20,6 +20,20 @@ class LayoutColumnsColors:
         self.border_normal = border_normal
 
 
+class LayoutPlasmaColors:
+    def __init__(
+        self,
+        border_focus: str,
+        border_focus_fixed: str,
+        border_normal: str,
+        border_normal_fixed: str,
+    ) -> None:
+        self.border_focus: str = border_focus
+        self.border_focus_fixed: str = border_focus_fixed
+        self.border_normal: str = border_normal
+        self.border_normal_fixed: str = border_normal_fixed
+
+
 class LayoutTreeTabColors:
     section_fg: str = "#b500ff"
     inactive_bg: str = "#c2c2c2"
@@ -70,16 +84,17 @@ def set_floating_and_size(window):
 
 
 def get_layout(
-    columns_colors: LayoutColumnsColors,
+    # columns_colors: LayoutColumnsColors,
+    plasma_colors: LayoutPlasmaColors,
     treetab_colors: LayoutTreeTabColors,
 ):
     return [
         layout.Plasma(
-            **vars(columns_colors),
+            **vars(plasma_colors),
             border_width=BORDER_WIDTH,
             margin=5,
-            border_on_single=True,
-        ),  # pyright: ignore[]
+            border_width_single=BORDER_WIDTH,
+        ),
         layout.TreeTab(
             font="FiraCode Nerd Font Bold",
             fontsize=17,

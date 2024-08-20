@@ -1,7 +1,7 @@
 from libqtile import bar, qtile
 from qtile_extras import widget
 from qtile_extras.widget.decorations import PowerLineDecoration, RectDecoration
-from globals import CALCURSE, TERMINAL
+from globals import CALCURSE, TERMINAL, SHELL
 import utils
 import distro
 from layouts import default as myly
@@ -383,10 +383,16 @@ def backlight():
 
 def layouts():
     return myly.get_layout(
-        columns_colors=myly.LayoutColumnsColors(
-            border_focus=[current_distro["accent"]],
-            border_focus_stack=[nord.blue],
-            border_normal=[nord.gray],
+        # columns_colors=myly.LayoutColumnsColors(
+        #     border_focus=[current_distro["accent"]],
+        #     border_focus_stack=[nord.blue],
+        #     border_normal=[nord.gray],
+        # ),
+        plasma_colors=myly.LayoutPlasmaColors(
+            border_focus=current_distro["color"],
+            border_focus_fixed=nord.gray,
+            border_normal=nord.glacier,
+            border_normal_fixed=nord.darker,
         ),
         treetab_colors=myly.LayoutTreeTabColors(
             section_fg=nord.purple,
