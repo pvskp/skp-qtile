@@ -72,8 +72,9 @@ powerline = {
             colour=nord.gray,
             radius=3,
             filled=True,
-            padding_x=0,
-            padding_y=4,
+            # padding=3,
+            # padding_x=0,
+            padding_y=3,
             group=False,
             use_widget_background=True,
             line_width=0,
@@ -314,6 +315,15 @@ def application_shortcuts():
             mouse_callbacks={"Button1": lambda: qtile.cmd_spawn(TERMINAL)},
             # **powerline,
         ),
+        widget.TextBox(
+            font=FONT,
+            fontsize=20,
+            text="󰹑 ",
+            foreground=nord.purple,
+            background=nord.bg,
+            mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("flameshot gui")},
+            # **powerline,
+        ),
     ]
     ...
 
@@ -393,7 +403,8 @@ def floating_layout():
 
 def dmenu_theme(prompt: str = ""):
     return {
-        **FONTCONFIG,
+        "font": "Arimo Nerd Font",
+        "fontsize": 14,
         "dmenu_bottom": True,
         "background": nord.bg,
         "selected_background": nord.blue,
@@ -402,7 +413,7 @@ def dmenu_theme(prompt: str = ""):
     }
 
 
-def bars(primary: bool = False):
+def bars():
     widgets = [
         text_separator(),
         *startmenu(),

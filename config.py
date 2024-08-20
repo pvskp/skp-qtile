@@ -4,7 +4,10 @@ from libqtile import extension
 from screeninfo import get_monitors
 from libqtile.lazy import lazy
 from libqtile import hook
+
 from themes import nord_minimal as theme
+
+# from themes import rosepine_minimal as theme
 from globals import TERMINAL, SHELL
 import utils
 
@@ -173,7 +176,7 @@ extension_defaults = widget_defaults.copy()
 screens = []
 for mon in get_monitors():
     if isinstance(mon.is_primary, bool):
-        screens.append(Screen(top=theme.bars(primary=not mon.is_primary)))  # don't know yet why I need to negate this
+        screens.append(Screen(top=theme.bars()))  # don't know yet why I need to negate this
 
 
 # Drag floating layouts.
