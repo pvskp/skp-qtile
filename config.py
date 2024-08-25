@@ -1,19 +1,21 @@
-from libqtile import qtile, bar
-from libqtile.config import Click, Drag, Group, Key, Screen, ScratchPad, DropDown
-from libqtile import extension
-from screeninfo import get_monitors
+from libqtile import extension, hook, qtile
+from libqtile.config import Click, Drag, DropDown, Group, Key, ScratchPad, Screen
 from libqtile.lazy import lazy
-from libqtile import hook
-
-from themes import nord_minimal as theme
-
-# from themes import rosepine_minimal as theme
-from globals import TERMINAL, SHELL
+import subprocess
 import utils
 
+# from themes import rosepine_minimal as theme
+from globals import SHELL, TERMINAL
+from themes import nord_minimal as theme
 
 utils.execute_in_background("nitrogen --restore")
 utils.execute_in_background("xhost +si:localuser:$USER")
+
+
+@hook.subscribe.screen_change
+def screen_change(event):
+    qtile.reconfigure_screens()
+    qtile.reconfigure_screens()
 
 
 @hook.subscribe.startup_once
@@ -114,7 +116,7 @@ groups = []
 
 group_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 group_labels = ["", "", "", "", "", "", "", "󱃾", ""]
-group_layouts = ["columns", "columns", "treetab", "columns", "columns", "columns", "columns", "columns", "columns"]
+group_layouts = ["plasma", "plasma", "treetab", "plasma", "plasma", "plasma", "plasma", "plasma", "plasma"]
 
 for i in range(len(group_names)):
     groups.append(
@@ -175,9 +177,12 @@ widget_defaults = dict(
 extension_defaults = widget_defaults.copy()
 
 screens = []
-for mon in get_monitors():
-    if isinstance(mon.is_primary, bool):
-        screens.append(Screen(top=theme.bars()))  # don't know yet why I need to negate this
+monitors = [line for line in subprocess.check_output(["xrandr", "--listmonitors"]).decode("utf-8").splitlines() if "Monitors" not in line]
+for mon in monitors:
+    if "*" in mon:
+        screens.append(Screen(top=theme.bars(primary=True)))
+        continue
+    screens.append(Screen(top=theme.bars(primary=False)))
 
 
 # Drag floating layouts.
@@ -196,7 +201,7 @@ cursor_warp = False
 floating_layout = theme.floating_layout()
 auto_fullscreen = True
 focus_on_window_activation = "smart"
-reconfigure_screens = True
+reconfigure_screens = False
 
 # If things like steam games want to auto-minimize themselves when losing
 # focus, should we respect this or not?

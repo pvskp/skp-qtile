@@ -1,7 +1,8 @@
 from libqtile import bar, qtile
 from qtile_extras import widget
+from libqtile.log_utils import logger
 from qtile_extras.widget.decorations import PowerLineDecoration, RectDecoration
-from globals import CALCURSE, TERMINAL, SHELL
+from globals import CALCURSE, TERMINAL
 import utils
 import distro
 from layouts import default as myly
@@ -147,6 +148,7 @@ def group_box():
             other_screen_border=nord.glacier,
             **powerline,
         ),
+        text_separator(),
     ]
 
 
@@ -171,6 +173,7 @@ def systray():
             icon_size=20,
             **systray_powerline,
         ),
+        text_separator(),
     ]
 
 
@@ -185,7 +188,8 @@ def memory():
             background=nord.gray,
             mouse_callbacks={"Button1": utils.open_htop},
             **powerline,
-        )
+        ),
+        text_separator(),
     ]
 
 
@@ -201,6 +205,7 @@ def wlan():
             mouse_callbacks={"Button1": utils.open_nmtui},
             **powerline,
         ),
+        text_separator(),
     ]
 
 
@@ -215,6 +220,7 @@ def volume():
             background=nord.gray,
             **powerline,
         ),
+        text_separator(),
     ]
 
 
@@ -231,7 +237,8 @@ def check_updates():
             background=nord.gray,
             display_format=" {updates}",
             **powerline,
-        )
+        ),
+        text_separator(),
     ]
 
 
@@ -251,6 +258,7 @@ def battery():
             format="{char} {percent:2.0%}",
             **powerline,
         ),
+        text_separator(),
     ]
 
 
@@ -264,6 +272,7 @@ def clock():
             background=nord.gray,
             **powerline,
         ),
+        text_separator(),
     ]
 
 
@@ -326,8 +335,8 @@ def application_shortcuts():
             mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("flameshot gui")},
             # **powerline,
         ),
+        text_separator(),
     ]
-    ...
 
 
 def startmenu():
@@ -341,6 +350,7 @@ def startmenu():
             mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("bash -c ~/.config/rofi/wrappers/runner")},
             # **powerline,
         ),
+        text_separator(),
     ]
 
 
@@ -366,6 +376,7 @@ def powermenu():
             mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("bash -c ~/.config/qtile/rofi/rofi-power")},
             **powerline,
         ),
+        text_separator(),
     ]
 
 
@@ -379,7 +390,8 @@ def backlight():
             min_brightness=5,
             background=nord.gray,
             **powerline,
-        )
+        ),
+        text_separator(),
     ]
 
 
@@ -421,45 +433,45 @@ def dmenu_theme(prompt: str = ""):
     }
 
 
-def bars():
+def bars(primary: bool):
     widgets = [
         text_separator(),
         *startmenu(),
-        text_separator(),
         *group_box(),
-        text_separator(),
         *application_shortcuts(),
-        text_separator(),
         *spacer(),
         *date(),
         *spacer(),
-        text_separator(),
         *check_updates(),
-        text_separator(),
-        *systray(),
-        # text_separator(),
-        # *bluetooth(),
-        text_separator(),
         *volume(),
-        text_separator(),
         *wlan(),
-        text_separator(),
         *memory(),
-        text_separator(),
         *backlight(),
-        text_separator(),
         *battery(),
-        text_separator(),
         *clock(),
-        text_separator(),
         *powermenu(),
-        text_separator(),
     ]
     bar_margin = 0
 
-    # if primary:
-    #     systray_pos = 9
-    #     widgets = widgets[0:systray_pos] + systray() + widgets[systray_pos:]
+    if primary:
+        widgets = [
+            text_separator(),
+            *startmenu(),
+            *group_box(),
+            *application_shortcuts(),
+            *spacer(),
+            *date(),
+            *spacer(),
+            *check_updates(),
+            *systray(),
+            *volume(),
+            *wlan(),
+            *memory(),
+            *backlight(),
+            *battery(),
+            *clock(),
+            *powermenu(),
+        ]
 
     return bar.Bar(
         widgets,
