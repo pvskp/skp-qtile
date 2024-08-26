@@ -1,6 +1,8 @@
+from typing import Optional
 from libqtile import layout
 from libqtile.config import Match
 from libqtile import hook
+from libqtile.layout import tree
 
 BORDER_WIDTH = 2
 
@@ -84,25 +86,44 @@ def set_floating_and_size(window):
 
 
 def get_layout(
-    # columns_colors: LayoutColumnsColors,
-    plasma_colors: LayoutPlasmaColors,
-    treetab_colors: LayoutTreeTabColors,
+    columns_colors: Optional[LayoutColumnsColors] = None,
+    plasma_colors: Optional[LayoutPlasmaColors] = None,
+    treetab_colors: Optional[LayoutTreeTabColors] = None,
 ):
-    return [
-        layout.Plasma(
-            **vars(plasma_colors),
-            border_width=BORDER_WIDTH,
-            margin=5,
-            border_width_single=BORDER_WIDTH,
-        ),
-        layout.TreeTab(
-            font="FiraCode Nerd Font Bold",
-            fontsize=17,
-            **vars(treetab_colors),
-            # border_width=2,
-            section_fontsize=15,
-            section_bottom=10,
-            sections=["DEFAULT", ""],
-            panel_width=200,
-        ),
-    ]
+    layouts = []
+
+    if columns_colors:
+        layouts.append(
+            layout.Columns(
+                **vars(columns_colors),
+                border_width=BORDER_WIDTH,
+                margin=5,
+                border_on_single=True,
+            ),  # pyright: ignore[]
+        )
+
+    if plasma_colors:
+        layouts.append(
+            layout.Plasma(
+                **vars(plasma_colors),
+                border_width=BORDER_WIDTH,
+                margin=5,
+                border_width_single=BORDER_WIDTH,
+            ),
+        )
+
+    if treetab_colors:
+        layouts.append(
+            layout.TreeTab(
+                font="FiraCode Nerd Font Bold",
+                fontsize=17,
+                **vars(treetab_colors),
+                # border_width=2,
+                section_fontsize=15,
+                section_bottom=10,
+                sections=["DEFAULT", ""],
+                panel_width=200,
+            ),
+        )
+
+    return layouts

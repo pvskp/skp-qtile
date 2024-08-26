@@ -397,17 +397,17 @@ def backlight():
 
 def layouts():
     return myly.get_layout(
-        # columns_colors=myly.LayoutColumnsColors(
-        #     border_focus=[current_distro["accent"]],
-        #     border_focus_stack=[nord.blue],
-        #     border_normal=[nord.gray],
-        # ),
-        plasma_colors=myly.LayoutPlasmaColors(
-            border_focus=current_distro["color"],
-            border_focus_fixed=nord.gray,
-            border_normal=nord.glacier,
-            border_normal_fixed=nord.darker,
+        columns_colors=myly.LayoutColumnsColors(
+            border_focus=[current_distro["accent"]],
+            border_focus_stack=[nord.blue],
+            border_normal=[nord.gray],
         ),
+        # plasma_colors=myly.LayoutPlasmaColors(
+        #     border_focus=current_distro["color"],
+        #     border_focus_fixed=nord.gray,
+        #     border_normal=nord.glacier,
+        #     border_normal_fixed=nord.darker,
+        # ),
         treetab_colors=myly.LayoutTreeTabColors(
             section_fg=nord.purple,
             inactive_bg=nord.gray,
