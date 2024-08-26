@@ -13,7 +13,7 @@ utils.execute_in_background("xhost +si:localuser:$USER")
 
 
 @hook.subscribe.screen_change
-def screen_change(event):
+def screen_change():
     qtile.reconfigure_screens()
     qtile.reconfigure_screens()
 
@@ -28,6 +28,8 @@ def start_once() -> None:
     utils.execute_in_background("barrier")
     utils.execute_in_background("/usr/lib/polkit-kde-authentication-agent-1")
     utils.execute_in_background("watch -- autorandr --change")
+    utils.execute_in_background("xset s off")
+    utils.execute_in_background("xset -dpms")
 
 
 mod = "mod4"
