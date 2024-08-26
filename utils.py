@@ -37,11 +37,11 @@ def go_to_group(name: str):
 
         qtile.groups_map[name].toscreen()
 
-        # if name in "9":
-        #     qtile.focus_screen(0)
-        #     qtile.groups_map[name].toscreen()
-        # else:
-        #     qtile.focus_screen(1)
-        #     qtile.groups_map[name].toscreen()
+        if name in "9":
+            qtile.focus_screen(1)
+            qtile.groups_map[name].toscreen()
+        else:
+            qtile.focus_screen(0)
+            qtile.groups_map[name].toscreen()
 
     return _inner
