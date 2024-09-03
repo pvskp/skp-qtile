@@ -6,7 +6,7 @@ import utils
 
 # from themes import rosepine_minimal as theme
 from globals import SHELL, TERMINAL
-from themes import nord_minimal as theme
+from themes import minimal as theme
 
 utils.execute_in_background("nitrogen --restore")
 utils.execute_in_background("xhost +si:localuser:$USER")
@@ -53,7 +53,7 @@ keys = [
     Key([mod, "control"], "l", lazy.layout.grow_right(), desc="Grow window to the right"),
     Key([mod, "control"], "j", lazy.layout.grow_down(), desc="Grow window down"),
     Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
-    Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
+    # Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
     # Toggle between split and unsplit sides of stack.
     # Split = all windows displayed
     # Unsplit = 1 window displayed, like Max layout, but still with
@@ -82,7 +82,7 @@ keys = [
     Key([mod], "Tab", lazy.screen.toggle_group(), desc="Last active group"),
     # Key([], "Print", lazy.spawn("bash -c 'maim -s | xclip -selection clipboard -t image/png && notify-send 'Selection Saved to clipboard''")),
     Key([], "Print", lazy.spawn("bash -c '~/.nix-profile/bin/flameshot gui'")),
-    Key([mod], "Print", lazy.spawn("spectacle")),
+    Key([mod], "Print", lazy.spawn("bash -c '~/.nix-profile/bin/flameshot screen --clipboard'")),
     Key([alt, "shift"], "1", lazy.spawn('bash -c \'setxkbmap us -variant intl && notify-send "Keyboard Layout" "Switched to us -variant intl"\'')),
     Key([alt, "shift"], "2", lazy.spawn('bash -c \'setxkbmap us && notify-send "Keyboard Layout" "Switched to us"\'')),
     Key(
@@ -118,7 +118,7 @@ groups = []
 
 group_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 group_labels = ["", "", "", "", "", "", "", "󱃾", ""]
-group_layouts = ["plasma", "plasma", "treetab", "plasma", "plasma", "plasma", "plasma", "plasma", "plasma"]
+group_layouts = ["columns", "columns", "treetab", "columns", "columns", "columns", "columns", "columns", "columns"]
 
 for i in range(len(group_names)):
     groups.append(

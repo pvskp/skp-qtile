@@ -1,51 +1,26 @@
 from libqtile import bar, qtile
 from qtile_extras import widget
-from libqtile.log_utils import logger
 from qtile_extras.widget.decorations import PowerLineDecoration, RectDecoration
 from globals import CALCURSE, TERMINAL
 import utils
 import distro
 from layouts import default as myly
+import colorschemes
 
+theme = colorschemes.TokyoNight
 
-class Nord:
-    bg: str = "#2E3440"  ## nord0 in palette
-    darker: str = "#22262E"
-    transparent: str = "#2E3440b3"  ## nord0 in palette
-    fg: str = "#81A1C1"  ## nord0 in palette
-    black: str = "#000000"  ## nord0 in palette
-    dark_gray: str = "#3B4252"  ## nord1 in palette
-    gray: str = "#434C5E"  ## nord2 in palette
-    light_gray: str = "#4C566A"  ## nord3 in palette
-    light_gray_bright: str = "#616E88"  ## out of palette
-    darkest_white: str = "#D8DEE9"  ## nord4 in palette
-    darker_white: str = "#E5E9F0"  ## nord5 in palette
-    white: str = "#ECEFF4"  ## nord6 in palette
-    teal: str = "#8FBCBB"  ## nord7 in palette
-    off_blue: str = "#88C0D0"  ## nord8 in palette
-    glacier: str = "#81A1C1"  ## nord9 in palette
-    blue: str = "#5E81AC"  ## nord10 in palette
-    red: str = "#BF616A"  ## nord11 in palette
-    orange: str = "#D08770"  ## nord12 in palette
-    yellow: str = "#EBCB8B"  ## nord13 in palette
-    green: str = "#A3BE8C"  ## nord14 in palette
-    purple: str = "#B48EAD"  ## nord15 in palette
-    none: str = "NONE"
-
-
-nord = Nord
 
 distros = {
     "manjaro linux": {
         "icon": " ",
-        "color": nord.green,
-        "accent": nord.teal,
+        "color": theme.blue,
+        "accent": theme.blue,
         "backlight_name": "amdgpu_bl1",
     },
     "ubuntu": {
         "icon": " ",
-        "color": nord.orange,
-        "accent": nord.orange,
+        "color": theme.orange,
+        "accent": theme.orange,
         "backlight_name": "intel_backlight",
     },
 }
@@ -72,7 +47,7 @@ powerline = {
 powerline = {
     "decorations": [
         RectDecoration(
-            colour=nord.gray,
+            colour=theme.gray,
             radius=3,
             filled=True,
             # padding=3,
@@ -90,7 +65,7 @@ powerline = {
 systray_powerline = {
     "decorations": [
         RectDecoration(
-            colour=nord.gray,
+            colour=theme.gray,
             radius=3,
             filled=True,
             padding_x=0,
@@ -123,10 +98,10 @@ systray_powerline = {
 
 
 def separator():
-    return widget.Sep(linewidth=10, background=nord.bg, foreground=nord.bg)
+    return widget.Sep(linewidth=10, background=theme.background, foreground=theme.background)
 
 
-def text_separator(separator_size: int = 1, fg: str = nord.bg, bg: str = nord.bg):
+def text_separator(separator_size: int = 1, fg: str = theme.background, bg: str = theme.background):
     return widget.TextBox(text=" " * separator_size, foreground=fg, background=bg)
 
 
@@ -135,17 +110,17 @@ def group_box():
         widget.GroupBox(
             font=FONT_MONO,
             fontsize=20,
-            active=nord.white,
-            inactive=nord.light_gray_bright,
+            active=theme.foreground,
+            inactive=theme.light_gray,
             highlight_method="text",
-            highlight_color=[nord.darkest_white, nord.darkest_white],
-            background=nord.gray,
+            highlight_color=[theme.foreground_darker, theme.foreground_darker],
+            background=theme.gray,
             this_current_screen_border=current_distro["accent"],
             urgent_alert_method="text",
-            urgent_text=nord.red,
-            this_screen_border=nord.glacier,
-            other_current_screen_border=nord.glacier,
-            other_screen_border=nord.glacier,
+            urgent_text=theme.red,
+            this_screen_border=theme.accent3,
+            other_current_screen_border=theme.accent3,
+            other_screen_border=theme.accent3,
             **powerline,
         ),
         text_separator(),
@@ -169,7 +144,7 @@ def window_name():
 def systray():
     return [
         widget.Systray(
-            background=nord.gray,
+            background=theme.gray,
             icon_size=20,
             **systray_powerline,
         ),
@@ -182,10 +157,10 @@ def memory():
         widget.Memory(
             **FONTCONFIG,
             fmt=" 󰍛 {} ",
-            foreground=nord.white,
+            foreground=theme.foreground_bright,
             format="{MemUsed:.0f}{mm}/{MemTotal:.0f}{mm}",
             measure_mem="G",
-            background=nord.gray,
+            background=theme.gray,
             mouse_callbacks={"Button1": utils.open_htop},
             **powerline,
         ),
@@ -200,8 +175,8 @@ def wlan():
             fmt=" 󰖩 {} ",
             interface=utils.get_current_wireless_interface(),
             format="{essid}",
-            foreground=nord.white,
-            background=nord.gray,
+            foreground=theme.foreground_bright,
+            background=theme.gray,
             mouse_callbacks={"Button1": utils.open_nmtui},
             **powerline,
         ),
@@ -216,8 +191,8 @@ def volume():
             fmt=" {} ",
             mute_format="       ",
             unmute_format="  {volume}%",
-            foreground=nord.white,
-            background=nord.gray,
+            foreground=theme.foreground_bright,
+            background=theme.gray,
             **powerline,
         ),
         text_separator(),
@@ -229,12 +204,12 @@ def check_updates():
         widget.CheckUpdates(
             **FONTCONFIG,
             distro="Arch_Sup",
-            colour_no_updates=nord.white,
+            colour_no_updates=theme.foreground_bright,
             update_interval=600,
             fmt=" {} ",
             mouse_callbacks={"Button1": utils.update_system},
-            colour_have_updates=nord.orange,
-            background=nord.gray,
+            colour_have_updates=theme.orange,
+            background=theme.gray,
             display_format=" {updates}",
             **powerline,
         ),
@@ -246,8 +221,8 @@ def battery():
     return [
         widget.Battery(
             **FONTCONFIG,
-            foreground=nord.white,
-            background=nord.gray,
+            foreground=theme.foreground_bright,
+            background=theme.gray,
             charge_char=" 󰁹",
             discharge_char=" 󰁹",
             not_charging_char="󰁹",
@@ -268,8 +243,8 @@ def clock():
             **FONTCONFIG,
             fmt=" 󰥔 {} ",
             format="%H:%M",
-            foreground=nord.white,
-            background=nord.gray,
+            foreground=theme.foreground_bright,
+            background=theme.gray,
             **powerline,
         ),
         text_separator(),
@@ -283,8 +258,8 @@ def date():
             fontsize=16,
             fmt=" {} ",
             format="%d de %b de %Y",
-            foreground=nord.white,
-            background=nord.bg,
+            foreground=theme.foreground_bright,
+            background=theme.background,
             mouse_callbacks={"Button1": lambda: qtile.cmd_spawn(CALCURSE)},
             **powerline,
         ),
@@ -303,8 +278,8 @@ def application_shortcuts():
             font=FONT,
             fontsize=20,
             text=" ",
-            foreground=nord.orange,
-            background=nord.bg,
+            foreground=theme.orange,
+            background=theme.background,
             mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("firefox")},
             # **powerline,
         ),
@@ -312,8 +287,8 @@ def application_shortcuts():
             font=FONT,
             fontsize=20,
             text=" ",
-            foreground=nord.blue,
-            background=nord.bg,
+            foreground=theme.blue,
+            background=theme.background,
             mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("thunderbird")},
             # **powerline,
         ),
@@ -321,8 +296,8 @@ def application_shortcuts():
             font=FONT,
             fontsize=20,
             text="󰌽 ",
-            foreground=nord.green,
-            background=nord.bg,
+            foreground=theme.green,
+            background=theme.background,
             mouse_callbacks={"Button1": lambda: qtile.cmd_spawn(TERMINAL)},
             # **powerline,
         ),
@@ -330,8 +305,8 @@ def application_shortcuts():
             font=FONT,
             fontsize=20,
             text="󰹑 ",
-            foreground=nord.purple,
-            background=nord.bg,
+            foreground=theme.purple,
+            background=theme.background,
             mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("flameshot gui")},
             # **powerline,
         ),
@@ -358,7 +333,7 @@ def bluetooth():
     return [
         widget.Bluetooth(
             default_text="  {connected_devices} ",
-            background=nord.gray,
+            background=theme.gray,
             default_show_battery=True,
             mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("blueman-manager")},
             **powerline,
@@ -372,7 +347,7 @@ def powermenu():
             text=" 󰐦 ",
             font=FONT_MONO,
             fontsize=17,
-            background=nord.red,
+            background=theme.red,
             mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("bash -c ~/.config/qtile/rofi/rofi-power")},
             **powerline,
         ),
@@ -388,7 +363,8 @@ def backlight():
             backlight_name=current_distro["backlight_name"],
             change_command="brightnessctl set {0}%",
             min_brightness=5,
-            background=nord.gray,
+            foreground=theme.foreground_bright,
+            background=theme.gray,
             **powerline,
         ),
         text_separator(),
@@ -399,8 +375,8 @@ def layouts():
     return myly.get_layout(
         columns_colors=myly.LayoutColumnsColors(
             border_focus=[current_distro["accent"]],
-            border_focus_stack=[nord.blue],
-            border_normal=[nord.gray],
+            border_focus_stack=[theme.blue],
+            border_normal=[theme.gray],
         ),
         # plasma_colors=myly.LayoutPlasmaColors(
         #     border_focus=current_distro["color"],
@@ -409,16 +385,16 @@ def layouts():
         #     border_normal_fixed=nord.darker,
         # ),
         treetab_colors=myly.LayoutTreeTabColors(
-            section_fg=nord.purple,
-            inactive_bg=nord.gray,
-            active_bg=nord.glacier,
-            bg_color=nord.darker,
+            section_fg=theme.purple,
+            inactive_bg=theme.gray,
+            active_bg=theme.accent3,
+            bg_color=theme.background_darker,
         ),
     )
 
 
 def floating_layout():
-    return myly.get_floating({"border_focus": current_distro["accent"], "border_normal": nord.bg})
+    return myly.get_floating({"border_focus": current_distro["accent"], "border_normal": theme.background})
 
 
 def dmenu_theme(prompt: str = ""):
@@ -426,9 +402,9 @@ def dmenu_theme(prompt: str = ""):
         "font": "Arimo Nerd Font",
         "fontsize": 14,
         "dmenu_bottom": True,
-        "background": nord.bg,
-        "selected_background": nord.blue,
-        "selected_foreground": nord.white,
+        "background": theme.background,
+        "selected_background": theme.blue,
+        "selected_foreground": theme.foreground_bright,
         "dmenu_prompt": prompt,
     }
 
@@ -478,6 +454,6 @@ def bars(primary: bool):
         32,
         margin=bar_margin,
         border_width=[3, 3, 3, 3],
-        border_color=nord.dark_gray,
-        background=nord.bg,
+        border_color=theme.dark_gray,
+        background=[theme.background],
     )
