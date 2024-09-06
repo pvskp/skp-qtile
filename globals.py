@@ -19,6 +19,7 @@ FLOATING_RULES = [
     Match(wm_class="Lutris"),
     Match(wm_class="ssh-askpass"),  # ssh-askpass
     Match(wm_class="minecraft-launcher"),
+    Match(wm_class="Lxappearance"),
     Match(title="branchdialog"),  # gitk
     Match(title="pinentry"),  # GPG key password entry
     Match(wm_class="pritunl"),  # ssh-askpass

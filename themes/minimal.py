@@ -28,7 +28,14 @@ distros = {
 current_distro = distros[distro.name().lower()]
 
 FONT_MONO = "JetBrainsMono Nerd Font"
-FONT = "Arimo Nerd Font"
+FONT = "Inter"
+
+
+space_multiplier = 1
+if not any(term in FONT.lower() for term in ["mono", "nerd"]):
+    space_multiplier = 3
+
+space = " "
 
 FONTCONFIG = {
     "font": FONT,
@@ -102,7 +109,7 @@ def separator():
 
 
 def text_separator(separator_size: int = 1, fg: str = theme.background, bg: str = theme.background):
-    return widget.TextBox(text=" " * separator_size, foreground=fg, background=bg)
+    return widget.TextBox(text=space * separator_size, foreground=fg, background=bg)
 
 
 def group_box():
@@ -156,7 +163,7 @@ def memory():
     return [
         widget.Memory(
             **FONTCONFIG,
-            fmt=" 󰍛 {} ",
+            fmt=" 󰍛" + space * space_multiplier + "{}" + space,
             foreground=theme.foreground_bright,
             format="{MemUsed:.0f}{mm}/{MemTotal:.0f}{mm}",
             measure_mem="G",
@@ -190,7 +197,7 @@ def volume():
             **FONTCONFIG,
             fmt=" {} ",
             mute_format="       ",
-            unmute_format="  {volume}%",
+            unmute_format="" + space * space_multiplier + "{volume}%" + space,
             foreground=theme.foreground_bright,
             background=theme.gray,
             **powerline,
@@ -230,7 +237,7 @@ def battery():
             full_char="󰂅",
             show_short_text=False,
             fmt=" {} ",
-            format="{char} {percent:2.0%}",
+            format="{char}" + space * space_multiplier + "{percent:2.0%}",
             **powerline,
         ),
         text_separator(),
@@ -241,7 +248,7 @@ def clock():
     return [
         widget.Clock(
             **FONTCONFIG,
-            fmt=" 󰥔 {} ",
+            fmt=" 󰥔" + space * space_multiplier + "{}" + space,
             format="%H:%M",
             foreground=theme.foreground_bright,
             background=theme.gray,
@@ -359,7 +366,7 @@ def backlight():
     return [
         widget.Backlight(
             font=FONT,
-            fmt=" 󰃞 {} ",
+            fmt=" 󰃞" + space * space_multiplier + "{} ",
             backlight_name=current_distro["backlight_name"],
             change_command="brightnessctl set {0}%",
             min_brightness=5,

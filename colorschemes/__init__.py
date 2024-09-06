@@ -67,7 +67,7 @@ class TokyoNight:
     accent3: str = "#7aa2f7"  # Blue accent in Tokyo Night
     group_box_current: str = "#ff75a0"  # Pink accent for current group box
     group_box_inactive: str = "#a3b9f0"  # Light foreground for inactive group box
-    blue: str = "#7aa2f7"  # Blue color in Tokyo Night
+    blue: str = "#435EA4"  # Blue color in Tokyo Night
     red: str = "#ff75a0"  # Pink color in Tokyo Night
     orange: str = "#ffb966"  # Orange color in Tokyo Night
     yellow: str = "#e0af68"  # Yellow color in Tokyo Night
