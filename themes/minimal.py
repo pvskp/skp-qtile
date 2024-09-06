@@ -441,7 +441,7 @@ def bars(primary: bool):
             *check_updates(),
             *systray(),
             *volume(),
-            *wlan(),
+            # *wlan(),
             *memory(),
             *backlight(),
             *battery(),

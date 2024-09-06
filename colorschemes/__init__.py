@@ -23,9 +23,6 @@
 #     none: str = "NONE"
 
 
-from themes.minimal import group_box
-
-
 class Nord:
     background: str = "#2E3440"  ## nord0 in palette
     background_darker: str = "#22262E"

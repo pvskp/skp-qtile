@@ -28,6 +28,8 @@ def start_once() -> None:
     utils.execute_in_background("barrier")
     utils.execute_in_background("/usr/lib/polkit-kde-authentication-agent-1")
     utils.execute_in_background("watch -- autorandr --change")
+    utils.execute_in_background("blueman-applet")
+    utils.execute_in_background("nm-applet")
     utils.execute_in_background("xset s off")
     utils.execute_in_background("xset -dpms")
 

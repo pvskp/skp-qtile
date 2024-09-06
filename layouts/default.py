@@ -2,9 +2,9 @@ from typing import Optional
 from libqtile import layout
 from libqtile.config import Match
 from libqtile import hook
-from libqtile.layout import tree
+import globals
 
-BORDER_WIDTH = 2
+BORDER_WIDTH = 1
 
 
 class LayoutColumnsColors:
@@ -59,23 +59,7 @@ def get_floating(floating_config={"border_focus": "#000000", "border_normal": "#
     return layout.Floating(
         **floating_config,
         border_width=BORDER_WIDTH,
-        float_rules=[
-            # Run the utility of `xprop` to see the wm class and name of an X client.
-            *layout.Floating.default_float_rules,
-            Match(wm_class="confirmreset"),  # gitk
-            Match(wm_class="makebranch"),  # gitk
-            Match(wm_class="maketag"),  # gitk
-            Match(wm_class="Webapp-manager.py"),
-            Match(wm_class="Gpick"),
-            Match(wm_class="spectacle"),
-            Match(wm_class="calcurse"),
-            Match(wm_class="Blueman-manager"),
-            Match(wm_class="Lutris"),
-            Match(wm_class="ssh-askpass"),  # ssh-askpass
-            Match(title="branchdialog"),  # gitk
-            Match(title="pinentry"),  # GPG key password entry
-            Match(wm_class="pritunl"),  # ssh-askpass
-        ],
+        float_rules=globals.FLOATING_RULES,
     )
 
 
