@@ -28,7 +28,7 @@ distros = {
 current_distro = distros[distro.name().lower()]
 
 FONT_MONO = "JetBrainsMono Nerd Font"
-FONT = "Inter"
+FONT = "JetBrainsMono Nerd Font"
 
 
 space_multiplier = 1
@@ -197,7 +197,7 @@ def volume():
             **FONTCONFIG,
             fmt=" {} ",
             mute_format="       ",
-            unmute_format="" + space * space_multiplier + "{volume}%" + space,
+            unmute_format=" " + space * space_multiplier + "{volume}%",
             foreground=theme.foreground_bright,
             background=theme.gray,
             **powerline,
