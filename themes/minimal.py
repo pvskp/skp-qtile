@@ -19,8 +19,8 @@ distros = {
     },
     "ubuntu": {
         "icon": " ",
-        "color": theme.orange,
-        "accent": theme.orange,
+        "color": "#E95420",
+        "accent": "#E95420",
         "backlight_name": "intel_backlight",
     },
 }
