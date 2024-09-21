@@ -23,4 +23,5 @@ FLOATING_RULES = [
     Match(title="branchdialog"),  # gitk
     Match(title="pinentry"),  # GPG key password entry
     Match(wm_class="pritunl"),  # ssh-askpass
+    Match(wm_class="Matplotlib"),
 ]

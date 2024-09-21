@@ -17,6 +17,12 @@ distros = {
         "accent": theme.blue,
         "backlight_name": "amdgpu_bl1",
     },
+    "arch linux": {
+        "icon": "󰣇 ",
+        "color": theme.foreground_light,
+        "accent": theme.foreground_light,
+        "backlight_name": "amdgpu_bl1",
+    },
     "ubuntu": {
         "icon": " ",
         "color": "#E95420",
@@ -261,7 +267,7 @@ def clock():
 def date():
     return [
         widget.Clock(
-            font="Roboto",
+            font="Inter",
             fontsize=16,
             fmt=" {} ",
             format="%d de %b de %Y",

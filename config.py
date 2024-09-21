@@ -32,6 +32,7 @@ def start_once() -> None:
     utils.execute_in_background("nm-applet")
     utils.execute_in_background("xset s off")
     utils.execute_in_background("xset -dpms")
+    utils.execute_in_background("/usr/bin/lxqt-policykit-agent")
 
 
 mod = "mod4"
@@ -61,7 +62,7 @@ keys = [
     # Unsplit = 1 window displayed, like Max layout, but still with
     # multiple stack panes
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
-    Key([mod, "shift"], "Return", lazy.spawn(f"{terminal} -e bash -i -c ~/.tmux/scripts/sessionizer.tmux"), desc="Launch terminal"),
+    Key([mod, "shift"], "Return", lazy.spawn(f"{terminal} -e zsh -i -c ~/.tmux/scripts/sessionizer.tmux"), desc="Launch terminal"),
     # Toggle between different layouts as defined below
     Key([mod], "s", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
