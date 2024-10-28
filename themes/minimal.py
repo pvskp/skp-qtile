@@ -7,7 +7,8 @@ import distro
 from layouts import default as myly
 import colorschemes
 
-theme = colorschemes.TokyoNight
+# theme = colorschemes.TokyoNight
+theme = colorschemes.Gruvbox
 
 
 distros = {
@@ -25,8 +26,8 @@ distros = {
     },
     "ubuntu": {
         "icon": " ",
-        "color": "#E95420",
-        "accent": "#E95420",
+        "color": "#fe8019",
+        "accent": "#b8bb26",
         "backlight_name": "intel_backlight",
     },
 }
@@ -467,6 +468,6 @@ def bars(primary: bool):
         32,
         margin=bar_margin,
         border_width=[3, 3, 3, 3],
-        border_color=theme.dark_gray,
+        border_color=theme.background,
         background=[theme.background],
     )

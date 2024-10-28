@@ -76,6 +76,32 @@ class TokyoNight:
     none: str = "NONE"
 
 
+class Gruvbox:
+    background: str = "#282828"  # Gruvbox Background
+    background_darker: str = "#1d2021"  # Gruvbox Darker Background
+    background_transparent: str = "#282828b3"  # Gruvbox Background with transparency
+    foreground: str = "#ebdbb2"  # Gruvbox Foreground
+    black: str = "#1d2021"  # Gruvbox Black
+    dark_gray: str = "#3c3836"  # Gruvbox Dark Gray
+    gray: str = "#7c6f64"  # Gruvbox Gray
+    light_gray: str = "#928374"  # Gruvbox Light Gray
+    light_gray_bright: str = "#a89984"  # Gruvbox Light Gray Bright
+    foreground_darker: str = "#fbf1c7"  # Gruvbox Foreground Lighter
+    foreground_light: str = "#f9f5d7"  # Gruvbox Foreground Light
+    foreground_bright: str = "#ffffff"  # Gruvbox Bright White
+    accent1: str = "#83a598"  # Gruvbox Aqua
+    accent2: str = "#d79921"  # Gruvbox Yellow
+    accent3: str = "#b16286"  # Gruvbox Purple
+    group_box_active: str = "#83a598"  # Gruvbox Aqua
+    blue: str = "#458588"  # Gruvbox Blue
+    red: str = "#fb4934"  # Gruvbox Red
+    orange: str = "#fe8019"  # Gruvbox Orange
+    yellow: str = "#fabd2f"  # Gruvbox Yellow
+    green: str = "#b8bb26"  # Gruvbox Green
+    purple: str = "#d3869b"  # Gruvbox Purple
+    none: str = "NONE"
+
+
 class RosePine:
     background: str = "#191724"  # base in Rose Pine palette
     background_darker: str = "#1f1d2e"  # surface in Rose Pine palette
