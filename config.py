@@ -62,6 +62,7 @@ keys = [
     # Unsplit = 1 window displayed, like Max layout, but still with
     # multiple stack panes
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
+    Key([mod], "e", lazy.spawn("thunar"), desc="Launch file manager"),
     Key([mod, "shift"], "Return", lazy.spawn(f"{terminal} -e zsh -i -c ~/.tmux/scripts/sessionizer.tmux"), desc="Launch terminal"),
     # Toggle between different layouts as defined below
     Key([mod], "s", lazy.next_layout(), desc="Toggle between layouts"),
