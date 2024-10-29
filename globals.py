@@ -8,12 +8,14 @@ CALCURSE = f"{TERMINAL} --class 'calcurse' -e {SHELL} calcurse"
 FLOATING_RULES = [
     # Run the utility of `xprop` to see the wm class and name of an X client.
     *layout.Floating.default_float_rules,
-    Match(wm_class="confirmreset"),  # gitk
-    Match(wm_class="makebranch"),  # gitk
-    Match(wm_class="maketag"),  # gitk
+    Match(wm_class="confirmreset"),
+    Match(wm_class="makebranch"),
+    Match(wm_class="maketag"),
     Match(wm_class="Webapp-manager.py"),
     Match(wm_class="Gpick"),
+    Match(wm_class="Gpick"),
     Match(wm_class="spectacle"),
+    Match(wm_class="Mechvibes"),
     Match(wm_class="calcurse"),
     Match(wm_class="Blueman-manager"),
     Match(wm_class="Lutris"),
@@ -24,4 +26,5 @@ FLOATING_RULES = [
     Match(title="pinentry"),  # GPG key password entry
     Match(wm_class="pritunl"),  # ssh-askpass
     Match(wm_class="Matplotlib"),
+    Match(wm_class="pkhex.exe"),
 ]
