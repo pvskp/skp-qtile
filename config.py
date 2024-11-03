@@ -6,7 +6,7 @@ import utils
 
 # from themes import rosepine_minimal as theme
 from globals import SHELL, TERMINAL
-from themes import minimal as theme
+from themes import lean as theme
 
 utils.execute_in_background("nitrogen --restore")
 utils.execute_in_background("xhost +si:localuser:$USER")
@@ -87,8 +87,8 @@ keys = [
     # Key([], "Print", lazy.spawn("bash -c 'maim -s | xclip -selection clipboard -t image/png && notify-send 'Selection Saved to clipboard''")),
     Key([], "Print", lazy.spawn("bash -c '~/.nix-profile/bin/flameshot gui'")),
     Key([mod], "Print", lazy.spawn("bash -c '~/.nix-profile/bin/flameshot screen --clipboard'")),
-    Key([alt, "shift"], "1", lazy.spawn('bash -c \'setxkbmap us -variant intl && notify-send "Keyboard Layout" "Switched to us -variant intl"\'')),
-    Key([alt, "shift"], "2", lazy.spawn('bash -c \'setxkbmap us && notify-send "Keyboard Layout" "Switched to us"\'')),
+    Key([alt, "shift"], "1", lazy.function(utils.change_keyboard_us_intl)),
+    Key([alt, "shift"], "2", lazy.function(utils.change_keyboard_us)),
     Key(
         [alt, "shift"],
         "k",

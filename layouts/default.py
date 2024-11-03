@@ -4,7 +4,7 @@ from libqtile.config import Match
 from libqtile import hook
 import globals
 
-BORDER_WIDTH = 2
+BORDER_WIDTH = 3
 
 
 class LayoutColumnsColors:

@@ -27,7 +27,7 @@ distros = {
     "ubuntu": {
         "icon": " ",
         "color": "#fe8019",
-        "accent": "#b8bb26",
+        "accent": theme.accent1,
         "backlight_name": "intel_backlight",
     },
 }
@@ -390,7 +390,7 @@ def layouts():
         columns_colors=myly.LayoutColumnsColors(
             border_focus=[current_distro["accent"]],
             border_focus_stack=[theme.blue],
-            border_normal=[theme.gray],
+            border_normal=[theme.dark_gray],
         ),
         # plasma_colors=myly.LayoutPlasmaColors(
         #     border_focus=current_distro["color"],

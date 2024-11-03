@@ -1,7 +1,43 @@
+from typing import Optional
 import psutil
 import os
 import globals
 from libqtile import qtile
+import subprocess
+
+
+def notify_send(subject: str, msg: str, icon: Optional[str] = None):
+    if not icon:
+        subprocess.Popen(["notify-send", subject, msg])
+        return
+
+    subprocess.Popen(["notify-send", subject, msg, "--icon", icon])
+
+
+def change_keyboard_us_intl(event):
+    change_keyboard_layout("us", "intl")
+
+
+def change_keyboard_us(event):
+    change_keyboard_layout("us")
+
+
+def change_keyboard_layout(layout: str, variant: Optional[str] = None):
+    keyboard_icon_path = "/usr/share/icons/elementary-xfce/devices/48/input-keyboard.png"
+    if not variant:
+        subprocess.Popen(["setxkbmap", layout])
+        notify_send(
+            "Keyboard Layout changed",
+            f"Switched to layout '{layout}'",
+            keyboard_icon_path,
+        )
+        return
+    subprocess.Popen(["setxkbmap", layout, "-variant", variant])
+    notify_send(
+        "Keyboard Layout changed",
+        f"Switched to layout '{layout}', variant '{variant}'",
+        keyboard_icon_path,
+    )
 
 
 def get_current_wireless_interface() -> str:
