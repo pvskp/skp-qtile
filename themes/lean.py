@@ -27,7 +27,7 @@ distros = {
     "ubuntu": {
         "icon": " ",
         "color": "#fe8019",
-        "accent": theme.accent1,
+        "accent": theme.group_box_active,
         "backlight_name": "intel_backlight",
     },
 }
@@ -73,7 +73,7 @@ def group_box():
             font=FONT_MONO,
             fontsize=20,
             active=theme.foreground,
-            inactive=theme.light_gray,
+            inactive=theme.foreground_darker,
             highlight_method="text",
             highlight_color=[theme.foreground_darker, theme.foreground_darker],
             background=theme.background,
@@ -115,7 +115,7 @@ def memory():
     return [
         widget.Memory(
             **FONTCONFIG,
-            fmt="[ 󰍛 {} ]",
+            fmt="󰍛 {}",
             foreground=theme.foreground_bright,
             format="{MemUsed:.0f}{mm}/{MemTotal:.0f}{mm}",
             measure_mem="G",
@@ -130,7 +130,7 @@ def wlan():
     return [
         widget.Wlan(
             **FONTCONFIG,
-            fmt=" 󰖩 {} ",
+            fmt="󰖩 {}",
             interface=utils.get_current_wireless_interface(),
             format="{essid}",
             foreground=theme.foreground_bright,
@@ -145,7 +145,7 @@ def volume():
     return [
         widget.Volume(
             **FONTCONFIG,
-            fmt="[ {} ]",
+            fmt="{}",
             mute_format="       ",
             unmute_format="   {volume}%",
             foreground=theme.foreground_bright,
@@ -162,7 +162,7 @@ def check_updates():
             distro="Arch_Sup",
             colour_no_updates=theme.foreground_bright,
             update_interval=600,
-            fmt=" {} ",
+            fmt="{}",
             mouse_callbacks={"Button1": utils.update_system},
             colour_have_updates=theme.orange,
             background=theme.background,
@@ -184,7 +184,7 @@ def battery():
             empty="󱟩",
             full_char="󰂅",
             show_short_text=False,
-            fmt="[  {}  ]",
+            fmt="{}",
             format="{char} {percent:2.0%}",
         ),
         space_separator(),
@@ -195,7 +195,7 @@ def clock():
     return [
         widget.Clock(
             **FONTCONFIG,
-            fmt="[ 󰥔 {} ]",
+            fmt="󰥔 {}",
             format="%H:%M",
             foreground=theme.foreground_bright,
             background=theme.background,
@@ -209,7 +209,7 @@ def date():
         widget.Clock(
             font="Inter",
             fontsize=16,
-            fmt=" {} ",
+            fmt="{}",
             format="%d de %b de %Y",
             foreground=theme.foreground_bright,
             background=theme.background,
@@ -272,7 +272,6 @@ def startmenu():
             fontsize=20,
             text=f"{current_distro['icon']}",
             foreground=current_distro["color"],
-            # background=nord.gray,
             mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("bash -c ~/.config/rofi/wrappers/runner")},
             # **powerline,
         ),
@@ -300,7 +299,7 @@ def powermenu():
             background=theme.red,
             mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("bash -c ~/.config/qtile/rofi/rofi-power")},
         ),
-        space_separator(),
+        # space_separator(),
     ]
 
 
@@ -308,7 +307,7 @@ def backlight():
     return [
         widget.Backlight(
             font=FONT,
-            fmt="[ 󰃞 {} ]",
+            fmt="󰃞 {}",
             backlight_name=current_distro["backlight_name"],
             change_command="brightnessctl set {0}%",
             min_brightness=5,
@@ -359,7 +358,6 @@ def dmenu_theme(prompt: str = ""):
 
 def bars(primary: bool):
     widgets = [
-        space_separator(),
         *startmenu(),
         *group_box(),
         *application_shortcuts(),
@@ -388,7 +386,7 @@ def bars(primary: bool):
             *spacer(),
             *check_updates(),
             *volume(),
-            # *wlan(),
+            *wlan(),
             *memory(),
             *backlight(),
             *battery(),
@@ -401,7 +399,7 @@ def bars(primary: bool):
         widgets,
         32,
         margin=bar_margin,
-        border_width=[3, 3, 3, 3],
+        border_width=[0, 0, 0, 0],
         border_color=theme.background,
         background=[theme.background],
     )
