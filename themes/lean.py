@@ -8,7 +8,7 @@ from layouts import default as myly
 import colorschemes
 
 # theme = colorschemes.TokyoNight
-theme = colorschemes.Gruvbox
+theme = colorschemes.CatppuccinMocha
 
 
 distros = {
@@ -26,8 +26,8 @@ distros = {
     },
     "ubuntu": {
         "icon": " ",
-        "color": "#fe8019",
-        "accent": theme.group_box_active,
+        "color": theme.orange,
+        "accent": theme.accent3,
         "backlight_name": "intel_backlight",
     },
 }
@@ -73,7 +73,7 @@ def group_box():
             font=FONT_MONO,
             fontsize=20,
             active=theme.foreground,
-            inactive=theme.foreground_darker,
+            inactive=theme.light_gray,
             highlight_method="text",
             highlight_color=[theme.foreground_darker, theme.foreground_darker],
             background=theme.background,
@@ -323,7 +323,7 @@ def layouts():
         columns_colors=myly.LayoutColumnsColors(
             border_focus=[current_distro["accent"]],
             border_focus_stack=[theme.blue],
-            border_normal=[theme.dark_gray],
+            border_normal=[theme.gray],
         ),
         # plasma_colors=myly.LayoutPlasmaColors(
         #     border_focus=current_distro["color"],
@@ -341,17 +341,22 @@ def layouts():
 
 
 def floating_layout():
-    return myly.get_floating({"border_focus": current_distro["accent"], "border_normal": theme.background})
+    return myly.get_floating(
+        {
+            "border_focus": current_distro["accent"],
+            "border_normal": theme.gray,
+        }
+    )
 
 
 def dmenu_theme(prompt: str = ""):
     return {
         "font": "Arimo Nerd Font",
-        "fontsize": 14,
+        "fontsize": 17,
         "dmenu_bottom": True,
         "background": theme.background,
-        "selected_background": theme.blue,
-        "selected_foreground": theme.foreground_bright,
+        "selected_background": theme.orange,
+        "selected_foreground": theme.background,
         "dmenu_prompt": prompt,
     }
 
@@ -399,7 +404,7 @@ def bars(primary: bool):
         widgets,
         32,
         margin=bar_margin,
-        border_width=[0, 0, 0, 0],
+        border_width=[3, 3, 3, 3],
         border_color=theme.background,
         background=[theme.background],
     )

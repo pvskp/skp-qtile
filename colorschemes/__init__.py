@@ -76,6 +76,32 @@ class TokyoNight:
     none: str = "NONE"
 
 
+class CatppuccinMocha:
+    background: str = "#1E1E2E"  # Catppuccin Mocha Background
+    background_darker: str = "#1C1C2E"  # Catppuccin Mocha Darker Background
+    background_transparent: str = "#1E1E2Eb3"  # Catppuccin Mocha Background com transparência
+    foreground: str = "#D9E0EE"  # Catppuccin Mocha Foreground
+    black: str = "#1C1C2E"  # Catppuccin Mocha Black
+    dark_gray: str = "#2A2A37"  # Catppuccin Mocha Dark Gray
+    gray: str = "#585b70"  # Catppuccin Mocha Gray
+    light_gray: str = "#A6A6A6"  # Catppuccin Mocha Light Gray
+    light_gray_bright: str = "#D7D7D7"  # Catppuccin Mocha Light Gray Bright
+    foreground_darker: str = "#C6C6D0"  # Catppuccin Mocha Foreground Lighter
+    foreground_light: str = "#E0E0E8"  # Catppuccin Mocha Foreground Light
+    foreground_bright: str = "#FFFFFF"  # Catppuccin Mocha Bright White
+    accent1: str = "#B5B5D8"  # Catppuccin Mocha Aqua
+    accent2: str = "#F5C2E7"  # Catppuccin Mocha Pink
+    accent3: str = "#F28FAD"  # Catppuccin Mocha Purple
+    group_box_active: str = "#B5B5D8"  # Catppuccin Mocha Aqua
+    blue: str = "#8BB8F1"  # Catppuccin Mocha Blue
+    red: str = "#d20f39"  # Catppuccin Mocha Red
+    orange: str = "#F5A97D"  # Catppuccin Mocha Orange
+    yellow: str = "#F8BD75"  # Catppuccin Mocha Yellow
+    green: str = "#A6DAB3"  # Catppuccin Mocha Green
+    purple: str = "#B5A0E5"  # Catppuccin Mocha Purple
+    none: str = "NONE"
+
+
 class Gruvbox:
     background: str = "#282828"  # Gruvbox Background
     background_darker: str = "#1d2021"  # Gruvbox Darker Background
