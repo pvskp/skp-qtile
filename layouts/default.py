@@ -7,7 +7,7 @@ import globals
 BORDER_WIDTH = 2
 
 
-class LayoutColumnsColors:
+class LayoutColumnsConfig:
     border_focus: list[str] = ["#000000"]
     border_focus_stack: list[str] = ["#0000ff"]
 
@@ -22,7 +22,18 @@ class LayoutColumnsColors:
         self.border_normal = border_normal
 
 
-class LayoutPlasmaColors:
+class LayoutMaxConfig:
+    def __init__(
+        self,
+        border_focus: str,
+        border_normal: str,
+        only_focused: bool,
+    ) -> None:
+        self.border_focus: str = border_focus
+        self.border_normal = border_normal
+        self.only_focused  = only_focused
+
+class LayoutPlasmaConfig:
     def __init__(
         self,
         border_focus: str,
@@ -36,7 +47,7 @@ class LayoutPlasmaColors:
         self.border_normal_fixed: str = border_normal_fixed
 
 
-class LayoutTreeTabColors:
+class LayoutTreeTabConfig:
     section_fg: str = "#b500ff"
     inactive_bg: str = "#c2c2c2"
     active_bg: str = "#0000ff"
@@ -55,7 +66,10 @@ class LayoutTreeTabColors:
         self.bg_color = bg_color
 
 
-def get_floating(floating_config={"border_focus": "#000000", "border_normal": "#000000"}):
+def get_floating(floating_config={
+    "border_focus": "#000000",
+    "border_normal": "#000000"
+}):
     return layout.Floating(
         **floating_config,
         border_width=BORDER_WIDTH,
@@ -71,38 +85,48 @@ def set_floating_and_size(window):
 
 
 def get_layout(
-    columns_colors: Optional[LayoutColumnsColors] = None,
-    plasma_colors: Optional[LayoutPlasmaColors] = None,
-    treetab_colors: Optional[LayoutTreeTabColors] = None,
+    columns_config: Optional[LayoutColumnsConfig] = None,
+    plasma_config: Optional[LayoutPlasmaConfig] = None,
+    max_config: Optional[LayoutMaxConfig] = None,
+    treetab_config: Optional[LayoutTreeTabConfig] = None,
 ):
     layouts = []
 
-    if columns_colors:
+    if columns_config:
         layouts.append(
             layout.Columns(
-                **vars(columns_colors),
+                **vars(columns_config),
                 border_width=BORDER_WIDTH,
-                margin=5,
+                margin=20,
                 border_on_single=True,
             ),  # pyright: ignore[]
         )
 
-    if plasma_colors:
+    if max_config:
+        layouts.append(
+            layout.Max(
+                **vars(max_config),
+                border_width=BORDER_WIDTH,
+                margin=0,
+            ),
+        )
+
+    if plasma_config:
         layouts.append(
             layout.Plasma(
-                **vars(plasma_colors),
+                **vars(plasma_config),
                 border_width=BORDER_WIDTH,
                 margin=5,
                 border_width_single=BORDER_WIDTH,
             ),
         )
 
-    if treetab_colors:
+    if treetab_config:
         layouts.append(
             layout.TreeTab(
                 font="FiraCode Nerd Font Bold",
                 fontsize=17,
-                **vars(treetab_colors),
+                **vars(treetab_config),
                 # border_width=2,
                 section_fontsize=15,
                 section_bottom=10,

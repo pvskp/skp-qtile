@@ -20,8 +20,8 @@ distros = {
     },
     "arch linux": {
         "icon": "󰣇 ",
-        "color": theme.foreground_light,
-        "accent": theme.foreground_light,
+        "color": theme.blue,
+        "accent": theme.blue,
         "backlight_name": "amdgpu_bl1",
     },
     "ubuntu": {
@@ -65,6 +65,17 @@ def pipe_separator(separator_size: int = 1, fg: str = theme.foreground, bg: str 
 
 def space_separator(separator_size: int = 1, fg: str = theme.background, bg: str = theme.background):
     return widget.TextBox(text=space * separator_size, foreground=fg, background=bg)
+
+
+def current_layout_widget():
+    return [
+        widget.CurrentLayout(
+            background=theme.background,
+            font = FONT_MONO,
+            fmt = "[{}]"
+        ),
+        space_separator(),
+    ]
 
 
 def group_box():
@@ -320,10 +331,15 @@ def backlight():
 
 def layouts():
     return myly.get_layout(
-        columns_colors=myly.LayoutColumnsColors(
+        columns_config=myly.LayoutColumnsConfig(
             border_focus=[current_distro["accent"]],
             border_focus_stack=[theme.blue],
             border_normal=[theme.gray],
+        ),
+        max_config=myly.LayoutMaxConfig(
+            border_focus=current_distro["accent"],
+            border_normal=theme.gray,
+            only_focused=True,
         ),
         # plasma_colors=myly.LayoutPlasmaColors(
         #     border_focus=current_distro["color"],
@@ -331,7 +347,7 @@ def layouts():
         #     border_normal=nord.glacier,
         #     border_normal_fixed=nord.darker,
         # ),
-        treetab_colors=myly.LayoutTreeTabColors(
+        treetab_config=myly.LayoutTreeTabConfig(
             section_fg=theme.purple,
             inactive_bg=theme.background,
             active_bg=theme.accent3,
@@ -376,6 +392,7 @@ def bars(primary: bool):
         *backlight(),
         *battery(),
         *clock(),
+        *current_layout_widget(),
         *powermenu(),
     ]
     bar_margin = 0
@@ -397,6 +414,7 @@ def bars(primary: bool):
             *battery(),
             *clock(),
             *systray(),
+            *current_layout_widget(),
             *powermenu(),
         ]
 
