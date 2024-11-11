@@ -97,7 +97,7 @@ def get_layout(
             layout.Columns(
                 **vars(columns_config),
                 border_width=BORDER_WIDTH,
-                margin=20,
+                margin=5,
                 border_on_single=True,
             ),  # pyright: ignore[]
         )

@@ -59,6 +59,8 @@ keys = [
     Key([mod, "shift"], "j", lazy.layout.shuffle_down(), lazy.layout.move_down().when(layout=["treetab"]), desc="Move window down"),
     Key([mod, "shift"], "k", lazy.layout.shuffle_up(), lazy.layout.move_up().when(layout=["treetab"]), desc="Move window up"),
 
+    Key([alt, "shift"], "l", lazy.spawn("betterlockscreen -l blur"), desc="Move window up"),
+
     # Switch focus of monitors
     Key([mod], "period", lazy.next_screen(), desc='Move focus to next monitor'),
     Key([mod], "comma", lazy.prev_screen(), desc='Move focus to prev monitor'),

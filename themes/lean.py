@@ -19,7 +19,7 @@ distros = {
         "backlight_name": "amdgpu_bl1",
     },
     "arch linux": {
-        "icon": "󰣇 ",
+        "icon": "󰣇",
         "color": theme.blue,
         "accent": theme.blue,
         "backlight_name": "amdgpu_bl1",
@@ -69,11 +69,7 @@ def space_separator(separator_size: int = 1, fg: str = theme.background, bg: str
 
 def current_layout_widget():
     return [
-        widget.CurrentLayout(
-            background=theme.background,
-            font = FONT_MONO,
-            fmt = "[{}]"
-        ),
+        widget.CurrentLayout(background=theme.background, font=FONT_MONO, fmt="[{}]"),
         space_separator(),
     ]
 
@@ -278,6 +274,7 @@ def application_shortcuts():
 
 def startmenu():
     return [
+        space_separator(),
         widget.TextBox(
             font=FONT,
             fontsize=20,
