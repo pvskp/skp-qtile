@@ -1,6 +1,5 @@
 from libqtile import bar, qtile
 from qtile_extras import widget
-from qtile_extras.widget.decorations import PowerLineDecoration, RectDecoration
 from globals import CALCURSE, TERMINAL
 import utils
 import distro
@@ -43,6 +42,11 @@ if not any(term in FONT.lower() for term in ["mono", "nerd"]):
     space_multiplier = 3
 
 space = " "
+
+# current_screen_width = utils.get_current_screen().info()['width']
+# current_screen_height = utils.get_current_screen().info()['height']
+
+
 
 FONTCONFIG = {
     "font": FONT,
@@ -202,8 +206,8 @@ def clock():
     return [
         widget.Clock(
             **FONTCONFIG,
-            fmt="󰥔 {}",
-            format="%H:%M",
+            fmt="{}",
+            format="%H:%M:%S",
             foreground=theme.foreground_bright,
             background=theme.background,
         ),
@@ -265,7 +269,7 @@ def application_shortcuts():
             text="󰹑 ",
             foreground=theme.purple,
             background=theme.background,
-            mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("flameshot gui")},
+            mouse_callbacks={"Button1": utils.cmd_print_current_screen},
             # **powerline,
         ),
         space_separator(),
@@ -381,14 +385,14 @@ def bars(primary: bool):
         *application_shortcuts(),
         *spacer(),
         *date(),
+        *clock(),
         *spacer(),
         *check_updates(),
         *volume(),
-        *wlan(),
+        # *wlan(),
         *memory(),
         *backlight(),
         *battery(),
-        *clock(),
         *current_layout_widget(),
         *powermenu(),
     ]
@@ -402,14 +406,14 @@ def bars(primary: bool):
             *application_shortcuts(),
             *spacer(),
             *date(),
+            *clock(),
             *spacer(),
             *check_updates(),
             *volume(),
-            *wlan(),
+            # *wlan(),
             *memory(),
             *backlight(),
             *battery(),
-            *clock(),
             *systray(),
             *current_layout_widget(),
             *powermenu(),

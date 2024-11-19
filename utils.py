@@ -1,3 +1,4 @@
+from logging import currentframe
 from typing import Optional
 import psutil
 import os
@@ -5,13 +6,26 @@ import globals
 from libqtile import qtile
 import subprocess
 
-
 def notify_send(subject: str, msg: str, icon: Optional[str] = None):
     if not icon:
         subprocess.Popen(["notify-send", subject, msg])
         return
 
     subprocess.Popen(["notify-send", subject, msg, "--icon", icon])
+
+def get_current_screen():
+    return qtile.current_screen
+
+def cmd_print_current_screen():
+    current_screen_width = get_current_screen().info()['width']
+    current_screen_height = get_current_screen().info()['height']
+    current_screen_x = get_current_screen().info()['x']
+    current_screen_y = get_current_screen().info()['y']
+    command = ['flameshot', 'gui', '--region']
+    command.append(f'{current_screen_width}x{current_screen_height}+{current_screen_x}+{current_screen_y}')
+
+
+    qtile.cmd_spawn(" ".join(command))
 
 
 def change_keyboard_us_intl(event):
