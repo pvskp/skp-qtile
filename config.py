@@ -24,7 +24,7 @@ def start_once() -> None:
     utils.execute_in_background("xset b off")
     utils.execute_in_background("xset b 0 0 0")
     utils.execute_in_background("dunst")
-    utils.execute_in_background("bash -c '~/.nix-profile/bin/flameshot'")
+    utils.execute_in_background("flameshot")
     # utils.execute_in_background("barrier")
     # utils.execute_in_background("/usr/lib/polkit-kde-authentication-agent-1")
     utils.execute_in_background("watch -- autorandr --change")
@@ -99,7 +99,7 @@ keys = [
     Key([alt], "Tab", lazy.group.focus_back(), desc="Alternate between two most recent windows"),
     Key([mod], "Tab", lazy.screen.toggle_group(), desc="Last active group"),
     # Key([], "Print", lazy.spawn("bash -c 'maim -s | xclip -selection clipboard -t image/png && notify-send 'Selection Saved to clipboard''")),
-    Key([], "Print", lazy.spawn("bash -c '~/.nix-profile/bin/flameshot gui'")),
+    Key([], "Print", lazy.spawn("flameshot gui")),
     Key([mod], "Print", lazy.spawn("bash -c '~/.nix-profile/bin/flameshot screen --clipboard'")),
     Key([alt, "shift"], "1", lazy.function(utils.change_keyboard_us_intl)),
     Key([alt, "shift"], "2", lazy.function(utils.change_keyboard_us)),
