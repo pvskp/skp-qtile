@@ -73,7 +73,7 @@ def space_separator(separator_size: int = 1, fg: str = theme.background, bg: str
 
 def current_layout_widget():
     return [
-        widget.CurrentLayout(background=theme.background, font=FONT_MONO, fmt="[{}]"),
+        widget.CurrentLayout(background=theme.background, font=FONT, fmt="{}"),
         space_separator(),
     ]
 
@@ -393,7 +393,7 @@ def bars(primary: bool):
         *memory(),
         *backlight(),
         *battery(),
-        *current_layout_widget(),
+        # *current_layout_widget(),
         *powermenu(),
     ]
     bar_margin = 0
@@ -415,7 +415,7 @@ def bars(primary: bool):
             *backlight(),
             *battery(),
             *systray(),
-            *current_layout_widget(),
+            # *current_layout_widget(),
             *powermenu(),
         ]
 
