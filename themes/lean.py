@@ -82,7 +82,7 @@ def group_box():
     return [
         widget.GroupBox(
             font=FONT_MONO,
-            fontsize=20,
+            fontsize=26,
             active=theme.foreground,
             inactive=theme.light_gray,
             highlight_method="text",
