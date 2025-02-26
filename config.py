@@ -43,29 +43,22 @@ keys = [
     # A list of available commands that can be bound to keys can be found
     # at https://docs.qtile.org/en/latest/manual/config/lazy.html
     # Switch between windows
-
     Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
     Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
     # Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
     # Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
     Key([mod], "j", lazy.group.next_window(), desc="Move focus down"),
     Key([mod], "k", lazy.group.prev_window(), desc="Move focus up"),
-
     Key([mod], "b", lazy.hide_show_bar(position="all"), desc="Toggles the bar to show/hide"),
     Key([mod], "space", lazy.group.next_window(), desc="Move window focus to other window"),
-
     Key([mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"),
     Key([mod, "shift"], "l", lazy.layout.shuffle_right(), desc="Move window to the right"),
     Key([mod, "shift"], "j", lazy.layout.shuffle_down(), lazy.layout.move_down().when(layout=["treetab"]), desc="Move window down"),
     Key([mod, "shift"], "k", lazy.layout.shuffle_up(), lazy.layout.move_up().when(layout=["treetab"]), desc="Move window up"),
-
     Key([alt, "shift"], "l", lazy.spawn("betterlockscreen -l blur"), desc="Move window up"),
-
     # Switch focus of monitors
-    Key([mod], "period", lazy.next_screen(), desc='Move focus to next monitor'),
-    Key([mod], "comma", lazy.prev_screen(), desc='Move focus to prev monitor'),
-
-
+    Key([mod], "period", lazy.next_screen(), desc="Move focus to next monitor"),
+    Key([mod], "comma", lazy.prev_screen(), desc="Move focus to prev monitor"),
     Key([mod, "control"], "h", lazy.layout.grow_left(), desc="Grow window to the left"),
     Key([mod, "control"], "l", lazy.layout.grow_right(), desc="Grow window to the right"),
     Key([mod, "control"], "j", lazy.layout.grow_down(), desc="Grow window down"),
@@ -104,12 +97,13 @@ keys = [
     Key([alt, "shift"], "1", lazy.function(utils.change_keyboard_us_intl)),
     Key([alt, "shift"], "2", lazy.function(utils.change_keyboard_us)),
     Key(
-        [alt, "shift"], "k",
+        [alt, "shift"],
+        "k",
         lazy.run_extension(
             extension.CommandSet(
                 commands={
-                    "dev": f"{TERMINAL} --title 'k9s (dev)' -e {SHELL} 'EDITOR=nvim k9s --context dev'",
-                    "prod": f"{TERMINAL} --title 'k9s (prod)' -e {SHELL} 'EDITOR=nvim k9s --context prod'",
+                    "dev": f"kitty --title 'k9s (dev)' -e {SHELL} 'EDITOR=nvim k9s --context dev'",
+                    "prod": f"kitty --title 'k9s (prod)' -e {SHELL} 'EDITOR=nvim k9s --context prod'",
                 },
                 **theme.dmenu_theme(prompt="select k8s cluster:"),
             )
@@ -166,6 +160,7 @@ def default_dropdown(id: str, command: str) -> DropDown:
         width=0.7,
         x=0.15,
         y=0.15,
+        on_focus_lost_hide=False,
     )
 
 
@@ -173,9 +168,10 @@ groups.append(
     ScratchPad(
         "scratchpad",
         [
-            default_dropdown("Ranger", "kitty -e ranger"),
+            default_dropdown("Ranger", f"{TERMINAL} -e ranger"),
             default_dropdown("TODO", "kitty -e zsh -c 'nvim ~/TODO.md'"),
             default_dropdown("Pavucontrol", "/usr/bin/pavucontrol"),
+            default_dropdown("Terminal", f"{TERMINAL}"),
         ],
     )
 )
@@ -185,6 +181,7 @@ keys.extend(
         Key([mod], "m", lazy.group["scratchpad"].dropdown_toggle("Ranger")),
         Key([mod], "n", lazy.group["scratchpad"].dropdown_toggle("TODO")),
         Key([mod], "p", lazy.group["scratchpad"].dropdown_toggle("Pavucontrol")),
+        Key([mod], "y", lazy.group["scratchpad"].dropdown_toggle("Terminal")),
     ]
 )
 

@@ -26,7 +26,7 @@ distros = {
     "ubuntu": {
         "icon": " ",
         "color": theme.orange,
-        "accent": theme.accent3,
+        "accent": theme.purple,
         "backlight_name": "intel_backlight",
     },
 }
@@ -195,6 +195,8 @@ def battery():
             empty="󱟩",
             full_char="󰂅",
             show_short_text=False,
+            low_percentage = 0.2,
+            update_interval = 5,
             fmt="{}",
             format="{char} {percent:2.0%}",
         ),
