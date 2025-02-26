@@ -21,7 +21,7 @@ distros = {
         "icon": "󰣇",
         "color": theme.blue,
         "accent": theme.blue,
-        "backlight_name": "amdgpu_bl1",
+        "backlight_name": "intel_backlight",
     },
     "ubuntu": {
         "icon": " ",
@@ -45,7 +45,6 @@ space = " "
 
 # current_screen_width = utils.get_current_screen().info()['width']
 # current_screen_height = utils.get_current_screen().info()['height']
-
 
 
 FONTCONFIG = {
@@ -195,8 +194,8 @@ def battery():
             empty="󱟩",
             full_char="󰂅",
             show_short_text=False,
-            low_percentage = 0.2,
-            update_interval = 5,
+            low_percentage=0.2,
+            update_interval=5,
             fmt="{}",
             format="{char} {percent:2.0%}",
         ),
