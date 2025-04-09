@@ -1,4 +1,5 @@
 from libqtile import bar, qtile
+from libqtile.widget.base import _Widget
 from qtile_extras import widget
 from globals import CALCURSE, TERMINAL
 import utils
@@ -119,6 +120,10 @@ def systray():
         ),
         space_separator(),
     ]
+
+
+def layout_info() -> list[_Widget]:
+    return [widget.CurrentLayoutIcon()]
 
 
 def memory():
@@ -395,6 +400,7 @@ def bars(primary: bool):
         *backlight(),
         *battery(),
         # *current_layout_widget(),
+        *layout_info(),
         *powermenu(),
     ]
     bar_margin = 0
@@ -417,6 +423,8 @@ def bars(primary: bool):
             *battery(),
             *systray(),
             # *current_layout_widget(),
+            *layout_info(),
+            space_separator(),
             *powermenu(),
         ]
 

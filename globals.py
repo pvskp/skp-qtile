@@ -29,4 +29,5 @@ FLOATING_RULES = [
     Match(wm_class="Matplotlib"),
     Match(wm_class="pkhex.exe"),
     Match(wm_class="pamac-manager"),
+    Match(wm_class="scrcpy"),
 ]
