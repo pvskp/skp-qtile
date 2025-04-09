@@ -47,6 +47,8 @@ keys = [
     Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
     # Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
     # Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
+    Key([mod], "l", lazy.group.next_window(), desc="Move focus down"),
+    Key([mod], "h", lazy.group.prev_window(), desc="Move focus up"),
     Key([mod], "j", lazy.group.next_window(), desc="Move focus down"),
     Key([mod], "k", lazy.group.prev_window(), desc="Move focus up"),
     Key([mod], "b", lazy.hide_show_bar(position="all"), desc="Toggles the bar to show/hide"),

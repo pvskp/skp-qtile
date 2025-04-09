@@ -342,7 +342,7 @@ def window_tasklist():
             font="Arimo Nerd Font",
             border=theme.purple,
             max_title_width=None,
-            rounded=False,
+            rounded=True,
         ),
     ]
 
