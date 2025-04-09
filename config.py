@@ -198,9 +198,19 @@ screens = []
 monitors = [line for line in subprocess.check_output(["xrandr", "--listmonitors"]).decode("utf-8").splitlines() if "Monitors" not in line]
 for mon in monitors:
     if "*" in mon:
-        screens.append(Screen(top=theme.bars(primary=True)))
+        screens.append(
+            Screen(
+                top=theme.bar_top(primary=True),
+                bottom=theme.bar_bottom(primary=True),
+            )
+        )
         continue
-    screens.append(Screen(top=theme.bars(primary=False)))
+    screens.append(
+        Screen(
+            top=theme.bar_top(primary=False),
+            bottom=theme.bar_bottom(primary=False),
+        )
+    )
 
 
 # Drag floating layouts.

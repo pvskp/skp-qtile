@@ -336,6 +336,17 @@ def backlight():
     ]
 
 
+def window_tasklist():
+    return [
+        widget.TaskList(
+            font="Arimo Nerd Font",
+            border=theme.purple,
+            max_title_width=None,
+            rounded=False,
+        ),
+    ]
+
+
 def layouts():
     return myly.get_layout(
         columns_config=myly.LayoutColumnsConfig(
@@ -384,7 +395,7 @@ def dmenu_theme(prompt: str = ""):
     }
 
 
-def bars(primary: bool):
+def bar_top(primary: bool):
     widgets = [
         *startmenu(),
         *group_box(),
@@ -428,6 +439,21 @@ def bars(primary: bool):
             *powermenu(),
         ]
 
+    return bar.Bar(
+        widgets,
+        32,
+        margin=bar_margin,
+        border_width=[3, 3, 3, 3],
+        border_color=theme.background,
+        background=[theme.background],
+    )
+
+
+def bar_bottom(primary: bool):
+    widgets = [
+        *window_tasklist(),
+    ]
+    bar_margin = 0
     return bar.Bar(
         widgets,
         32,
