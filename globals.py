@@ -1,8 +1,8 @@
 from libqtile import layout
 from libqtile.config import Match
 
-# TERMINAL = "kitty"
-TERMINAL = "ghostty"
+TERMINAL = "kitty"
+# TERMINAL = "ghostty"
 SHELL = "bash -i -c"
 CALCURSE = f"{TERMINAL} --class 'calcurse' -e {SHELL} calcurse"
 

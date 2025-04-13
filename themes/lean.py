@@ -1,15 +1,16 @@
-from libqtile import bar, qtile
+from libqtile import bar, layout, qtile
 from libqtile.widget.base import _Widget
 from qtile_extras import widget
-from globals import CALCURSE, TERMINAL
+from globals import CALCURSE, TERMINAL, FLOATING_RULES
 import utils
 import distro
-from layouts import default as myly
 import colorschemes
+from layouts.tabbed import Tabbed
 
 # theme = colorschemes.TokyoNight
 theme = colorschemes.CatppuccinMocha
 
+BORDER_WIDTH = 2
 
 distros = {
     "manjaro linux": {
@@ -348,47 +349,68 @@ def window_tasklist():
 
 
 def layouts():
-    return myly.get_layout(
-        columns_config=myly.LayoutColumnsConfig(
+    return [
+        Tabbed(
+            # border_width=BORDER_WIDTH,
+            border_focus=[current_distro["accent"]],
+            border_normal=[theme.gray],
+            margin=0,
+            active_bg=theme.background,
+            active_fg=current_distro["accent"],
+            font="Arimo Nerd Font",
+            fontsize=17,
+        ),
+        layout.Columns(
             border_focus=[current_distro["accent"]],
             border_focus_stack=[theme.blue],
             border_normal=[theme.gray],
+            border_width=BORDER_WIDTH,
+            margin=5,
+            border_on_single=True,
         ),
-        max_config=myly.LayoutMaxConfig(
-            border_focus=current_distro["accent"],
-            border_normal=theme.gray,
-            only_focused=True,
-        ),
-        # plasma_colors=myly.LayoutPlasmaColors(
-        #     border_focus=current_distro["color"],
-        #     border_focus_fixed=nord.gray,
-        #     border_normal=nord.glacier,
-        #     border_normal_fixed=nord.darker,
-        # ),
-        treetab_config=myly.LayoutTreeTabConfig(
-            section_fg=theme.purple,
-            inactive_bg=theme.background,
-            active_bg=theme.accent3,
-            bg_color=theme.background_darker,
-        ),
-    )
+    ]
+
+    # return myly.get_layout(
+    #     columns_config=myly.LayoutColumnsConfig(
+    #         border_focus=[current_distro["accent"]],
+    #         border_focus_stack=[theme.blue],
+    #         border_normal=[theme.gray],
+    #     ),
+    #     max_config=myly.LayoutMaxConfig(
+    #         border_focus=current_distro["accent"],
+    #         border_normal=theme.gray,
+    #         only_focused=True,
+    #     ),
+    #     # plasma_colors=myly.LayoutPlasmaColors(
+    #     #     border_focus=current_distro["color"],
+    #     #     border_focus_fixed=nord.gray,
+    #     #     border_normal=nord.glacier,
+    #     #     border_normal_fixed=nord.darker,
+    #     # ),
+    #     treetab_config=myly.LayoutTreeTabConfig(
+    #         section_fg=theme.purple,
+    #         inactive_bg=theme.background,
+    #         active_bg=theme.accent3,
+    #         bg_color=theme.background_darker,
+    #     ),
+    # )
 
 
 def floating_layout():
-    return myly.get_floating(
-        {
-            "border_focus": current_distro["accent"],
-            "border_normal": theme.gray,
-        }
+    return layout.Floating(
+        border_focus=current_distro["accent"],
+        border_normal=theme.gray,
+        border_width=BORDER_WIDTH,
+        float_rules=FLOATING_RULES,
     )
 
 
 def dmenu_theme(prompt: str = ""):
     return {
         "font": "Arimo Nerd Font",
-        "fontsize": 17,
         "dmenu_bottom": True,
         "background": theme.background,
+        "fontsize": 17,
         "selected_background": theme.orange,
         "selected_foreground": theme.background,
         "dmenu_prompt": prompt,

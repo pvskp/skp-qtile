@@ -31,7 +31,8 @@ class LayoutMaxConfig:
     ) -> None:
         self.border_focus: str = border_focus
         self.border_normal = border_normal
-        self.only_focused  = only_focused
+        self.only_focused = only_focused
+
 
 class LayoutPlasmaConfig:
     def __init__(
@@ -66,10 +67,7 @@ class LayoutTreeTabConfig:
         self.bg_color = bg_color
 
 
-def get_floating(floating_config={
-    "border_focus": "#000000",
-    "border_normal": "#000000"
-}):
+def get_floating(floating_config={"border_focus": "#000000", "border_normal": "#000000"}):
     return layout.Floating(
         **floating_config,
         border_width=BORDER_WIDTH,
